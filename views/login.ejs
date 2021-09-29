@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://kit.fontawesome.com/1f7012dcb5.js" crossorigin="anonymous" defer></script>
+    <!--  bootstrap css -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="/css/style.css">
+    <title>Login</title>
+</head>
+<body>
+    
+    
+<div class="mb-3"></div>
+
+<div class="container" style="height:0">
+   <div class="row ">
+      <div class="message col-lg-8 mx-auto">
+           <%- messages('message', locals) %>
+      </div>
+   </div>
+</div>
+
+<div class="main-section login">
+
+    <div class="main-nav login">
+        <nav>
+            <ul>
+                <% if (user) {%>
+                <li><a class="btn btn-primary" href="/profile">Profile</a></li>
+                <li><a class="btn btn-primary" href="/admin/users">Admin</a></li>
+                <li><a class="btn btn-primary" href="/auth/logout">Logout</a></li>
+                <% } else { %>
+                <li><a class="btn btn-primary" href="/">Home</a></li>
+                <li><a class="btn btn-primary" href="/auth/login">Login</a></li>
+                <li><a class="btn btn-primary" href="/profile">Profile</a></li>
+                <% } %>
+            </ul>
+        </nav>
+    </div>
+
+   
+    <div class="main-title login">
+        <header>
+            <h2>Login using...</h2>
+        </header>
+    </div>
+    
+
+    <div class="main-content login">
+        <main>
+            <a class="google-btn btn btn-sm btn-danger" href="/auth/google">Google</a><br><br>
+        </main>
+    </div>
+    
+    
+    <div class="main-footer home ">
+        <div>&copy; boris84 2021</div>
+    </div>  
+    
+</div>
+
+
+<script>
+    const message = document.querySelector('.message');
+    
+    if (message) {
+       setTimeout(() => {
+           message.style.display = 'none'
+       }, 2000);
+    }
+</script>
+
+
+<!-- bootstrap javascript -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>
