@@ -7,7 +7,7 @@
     // ADMIN USERS ROUTES
 
 
-    // Securing admin views
+    // secure admin views
     const authCheck = (req, res, next) => {
         if (!req.user) {
         // if user is not logged in
@@ -37,7 +37,7 @@
 
 
     // GET a user 
-    router.get('/users/:id', (req, res) => {
+    router.get('/users/:id', authCheck, (req, res) => {
       const id = req.params.id;
         
       User.findById(id, {useFindAndModify: false})
@@ -54,7 +54,7 @@
 
 
     // DELETE a user
-    router.delete('/users/:id', (req, res) => {
+    router.delete('/users/:id', authCheck, (req, res) => {
       const id = req.params.id;
         
       // 2. server deletes that document based on the id.
@@ -72,7 +72,7 @@
 
 
     // GET edit form
-    router.get('/users/admin-edit-user/:id', (req, res) => {
+    router.get('/users/admin-edit-user/:id', authCheck, (req, res) => {
       const id = req.params.id;  
 
       User.findById(id, {useFindAndModify: false})
@@ -89,12 +89,12 @@
 
 
     // handle POST edit form
-    router.post('/users/admin-edit-user/:id', (req, res) => {
+    router.post('/users/admin-edit-user/:id', authCheck, (req, res) => {
       const id = req.params.id;
       const user = req.user;
 
-      req.checkBody('username', 'This field must have a value').notEmpty();
-      req.checkBody('googleId', 'This field must have a value').notEmpty();
+      req.checkBody('username', 'this field must have a value.').notEmpty();
+      req.checkBody('googleId', 'this field must have a value.').notEmpty();
 
       let username = req.body.username;
       let googleId = req.body.googleId;
@@ -111,9 +111,8 @@
           })
       } else {
            User.findOneAndUpdate({_id: id}, {
-              username: user.username,
-              googleId: user.googleId,
-              thumbnail: user.thumbnail
+              username: username,
+              googleId: googleId,
            }, 
            {
               upsert: true,

@@ -7,62 +7,56 @@
     <!--  bootstrap css -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link type="text/css" rel="stylesheet" href="/css/style.css">
-    
-                                <!--  dompurify -->
-                    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.3.2/purify.min.js"></script>
-    
-    
     <title>Profile</title>
 </head>
 <body>
    
-    
-<div class="mb-3"></div>
 
-
-<div class="container" style="height:0">
+<div style="height:0">
    <div class="row ">
-      <div class="message col-sm-12 mx-auto">
+      <div class="message">
            <%- messages('message', locals) %>
       </div>
    </div>
 </div>
        
    
-<div class="main-section profile">
-   
-    <div class="main-nav profile">
-        <nav>
-            <ul>
+<main role="main" class="container">
+  <div class="row">
+     <div class="col">
+     
+        <div class="main-nav profile">
+            <nav>
+                <ul>
                 <li><a class="btn btn-primary" href="/">Home</a></li>
                 <li><a class="btn btn-primary" href="/admin/users">Admin</a></li>
                 <li><a class="btn btn-primary" href="/auth/logout">Logout</a></li>
-            </ul>
-        </nav>
-    </div>
-    
-    
-    <div class="main-title profile">
-        <header>
-           <h1 class="fs-2"><b>Welcome to your profile, </b></h1>
-             <hr>
-               <br>
-        </header>
-    </div>
+                </ul>
+            </nav>
+        </div>
 
-    <div class="main-content profile">
-        <img src="<%= user.thumbnail %>"/>
-        <h3><%= user.username %></h3>
-        <p>This is your profile thumbnail</p>
-    </div>
-    
-    
-    <div class="main-footer profile ">
-        <div>&copy; boris84 2021</div>
-    </div>
-    
-</div>
 
+        <div class="main-title profile">
+            <header>
+               <h1 class="fs-2"><b>Welcome to your profile,</b></h1>
+            </header>
+        </div>
+
+
+        <div class="main-content profile">
+            <img src="<%= user.thumbnail %>"/>
+            <h3><%= user.username %></h3>
+            <p>This is your profile thumbnail</p>
+        </div>
+
+
+        <div class="main-footer profile ">
+            <div>&copy; boris84 2021</div>
+        </div>
+    
+       </div>
+   </div>
+</main>
 
    
 <script>

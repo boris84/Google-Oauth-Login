@@ -11,55 +11,61 @@
 </head>
 <body>
     
-    
-<div class="mb-3"></div>
-
-<div class="container" style="height:0">
-   <div class="row ">
-      <div class="message col-lg-8 mx-auto">
+      
+<div style="height:0">
+   <div class="row">
+      <div class="message">
            <%- messages('message', locals) %>
       </div>
    </div>
 </div>
 
-<div class="main-section login">
 
-    <div class="main-nav login">
-        <nav>
-            <ul>
-                <% if (user) {%>
-                <li><a class="btn btn-primary" href="/profile">Profile</a></li>
-                <li><a class="btn btn-primary" href="/admin/users">Admin</a></li>
-                <li><a class="btn btn-primary" href="/auth/logout">Logout</a></li>
-                <% } else { %>
-                <li><a class="btn btn-primary" href="/">Home</a></li>
-                <li><a class="btn btn-primary" href="/auth/login">Login</a></li>
-                <li><a class="btn btn-primary" href="/profile">Profile</a></li>
-                <% } %>
-            </ul>
-        </nav>
-    </div>
+<!-- /.container -->
+<main role="main" class="container">
+  <div class="row">
+     <div class="col">
+     
+        <div class="main-nav login">
+            <nav>
+                <ul>
+                    <% if (user) {%>
+                        <li><a class="btn btn-primary" href="/profile">Profile</a></li>
+                        <li><a class="btn btn-primary" href="/admin/users">Admin</a></li>
+                        <li><a class="btn btn-primary" href="/auth/logout">Logout</a></li>
+                    <% } else { %>
+                        <li><a class="btn btn-primary" href="/">Home</a></li>
+                        <li><a class="btn btn-primary" href="/auth/login">Login</a></li>
+                        <li><a class="btn btn-primary" href="/profile">Profile</a></li>
+                    <% } %>
+                </ul>
+            </nav>
+        </div>
 
-   
-    <div class="main-title login">
-        <header>
-            <h2>Login using...</h2>
-        </header>
-    </div>
-    
 
-    <div class="main-content login">
-        <main>
-            <a class="google-btn btn btn-sm btn-danger" href="/auth/google">Google</a><br><br>
-        </main>
-    </div>
-    
-    
-    <div class="main-footer home ">
-        <div>&copy; boris84 2021</div>
-    </div>  
-    
-</div>
+        <div class="main-title login">
+            <header>
+                <h2>Login using...</h2>
+            </header>
+        </div>
+
+
+        <div class="main-content login">
+            <main>
+                <a class="google-btn btn btn-sm btn-danger" href="/auth/google">Google</a><br><br>
+            </main>
+        </div>
+
+
+        <div class="main-footer home ">
+            <div>&copy; boris84 2021</div>
+        </div>
+
+      </div>
+   </div>  
+</main>
+<!-- /.container -->
+
 
 
 <script>

@@ -1,60 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- bootstrap css -->
+    <script src="https://kit.fontawesome.com/1f7012dcb5.js" crossorigin="anonymous" defer></script>
+    <!--  bootstrap css -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link type="text/css" rel="stylesheet" href="/css/style.css">
     <title>Admin Edit User</title>
-</head>
-<body>
+  </head>
+  <body>
    
-    
-<div class="container" style="height:0">
+
+  <div style="height:0">
     <div class="row">
-        <div class="errors col-lg-3 mx-auto">
-            <% if (errors) { %>
-                <% errors.forEach(function(error) { %>
-                    <div class="alert alert-danger">
-                         <%= error.msg %>
-                    </div>
-                <% }); %>
-            <% } %>
-        </div>
+      <div class="errors">
+         <% if (errors) { %>
+            <% errors.forEach(function(error) { %>
+            <div class="alert alert-danger">
+                  <%= error.msg %>
+            </div>
+            <% }); %>
+         <% } %>
+      </div>
     </div>
-</div>
+  </div>
+        
   
+  <!-- /.container -->
+  <main role="main" class="container" style="width: 500px">
+    <div class="row">
+      <div class="col">
 
-<div class="mb-5"></div>
-
-  
- <div class="main-section admin edit">
-
-  <div class="main-nav admin edit mb-5">
-        <nav>
-            <ul>
-               <% if (!user) { %>
-                    <li><a class="btn btn-primary" href="/auth/login">Login</a></li>
-                <% } else { %>
-                    <li><a class="btn btn-primary font-weight-bold" href="/admin/users/<%= user.id %>">Back</a></li>
-                    <li><a class="btn btn-primary" href="/">Home</a></li>
-                    <li><a class="btn btn-primary" href="/profile">Profile</a></li>
-                    <li><a class="btn btn-primary" href="/auth/logout">Logout</a></li>
-                <% } %>
-            </ul>
-        </nav>
-    </div>
+        <div class="main-nav admin">
+            <nav>
+                <ul>
+                   <% if (!user) { %>
+                        <li><a class="btn btn-primary" href="/auth/login">Login</a></li>
+                    <% } else { %>
+                        <li><a class="btn btn-primary" href="/admin/users/<%= user.id %>">Back</a></li>
+                        <li><a class="btn btn-primary" href="/">Home</a></li>
+                        <li><a class="btn btn-primary" href="/profile">Profile</a></li>
+                        <li><a class="btn btn-primary" href="/auth/logout">Logout</a></li>
+                    <% } %>
+                </ul>
+            </nav>
+         </div>
                 
                 
-    <div class="main-title admin edit mb-3">
-        <h2 class="text-dark text-center">Admin Edit Details</h2>
-    </div>        
+        <div class="main-title admin">
+            <h2 class="text-dark text-center">Admin Edit Details</h2>
+        </div>        
                   
     
-    <div class="main-content admin edit">
-    <img src="<%= user.thumbnail %>"/>
-        <form method="POST" action="/admin/users/admin-edit-user/<%= user.id %>">
+        <div class="main-content admin">
+            <img src="<%= user.thumbnail %>"/>
+            <form method="POST" action="/admin/users/admin-edit-user/<%= user.id %>">
             <div class="mb-2">
                 <label for="username" class="username">Username</label>
                 <input type="text" name="username" value="<%= user.username %>" class="form-control form-control-sm" id="username" aria-describedby="username">
@@ -64,15 +65,19 @@
                 <input type="text" name="googleId" value="<%= user.googleId %>" class="form-control form-control-sm">
             </div>
                 <button type="submit" class="btn btn-sm btn-primary fw-bold">Submit</button>
-        </form>     
-    </div> 
-    <br>
-            <div class="main-footer admin edit">
-                <div class="form copy text-center">&copy; boris84 2021</div>
-            </div>                 
-    <br>
-        
-</div>
+            </form>     
+        </div> 
+           
+            <br>
+                <div class="main-footer admin">
+                    <div class="form copy text-center">&copy; boris84 2021</div>
+                </div>                 
+            <br>
+       
+      </div> 
+    </div>
+  </main>
+  <!-- /.container -->
 
 
 <script>
@@ -86,7 +91,7 @@
 </script>
     
   
-  <!-- bootstrap javascript -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+ <!-- bootstrap javascript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>
