@@ -28,9 +28,9 @@
         
   
   <!-- /.container -->
-  <main role="main" class="container" style="width: 500px">
+  <main role="main" class="container">
     <div class="row">
-      <div class="col">
+      <div class="col-xl-4 col-lg-5 col-md-6 col-sm-8 mx-auto">
 
         <div class="main-nav admin">
             <nav>
@@ -49,28 +49,33 @@
                 
                 
         <div class="main-title admin">
-            <h2 class="text-dark text-center">Admin Edit Details</h2>
+            <h3 class="text-dark text-center">Admin Edit Details</h3>
         </div>        
                   
     
         <div class="main-content admin">
-            <img src="<%= user.thumbnail %>"/>
             <form method="POST" action="/admin/users/admin-edit-user/<%= user.id %>">
-            <div class="mb-2">
-                <label for="username" class="username">Username</label>
-                <input type="text" name="username" value="<%= user.username %>" class="form-control form-control-sm" id="username" aria-describedby="username">
-            </div>
-            <div class="mb-3">
-                <label for="GoogleId" class="form-label">GoogleId</label>
-                <input type="text" name="googleId" value="<%= user.googleId %>" class="form-control form-control-sm">
-            </div>
-                <button type="submit" class="btn btn-sm btn-primary fw-bold">Submit</button>
+                <div class="form-row">
+                  <div class="col mx-auto p-3">
+                    <img src="<%= user.thumbnail %>"/>
+
+                    <div class="mb-2">
+                        <label for="username" class="username">Username</label>
+                        <input type="text" name="username" value="<%= user.username %>" class="form-control form-control-sm" aria-describedby="username">
+                    </div>
+                    <div class="mb-3">
+                        <label for="GoogleId" class="form-label">GoogleId</label>
+                        <input type="password" name="googleId" value="<%= user.googleId %>" class="form-control form-control-sm" aria-describedby="userId" readonly>
+                    </div>
+                        <button type="submit" class="btn btn-sm btn-primary">Submit</button>
+                  </div>
+                </div>
             </form>     
         </div> 
            
             <br>
                 <div class="main-footer admin">
-                    <div class="form copy text-center">&copy; boris84 2021</div>
+                    <div class="form copy text-center">&copy; dev010_1 2021</div>
                 </div>                 
             <br>
        

@@ -61,7 +61,7 @@
       User.findByIdAndDelete(id, {useFindAndModify: false})
        .then((result) => {
        // 3. we cannot use a redirect as a response when sending an ajax request. Here the server sends json data with a 'redirect' property back to the browser as a response (go back to details.ejs ajax request).
-        req.flash('success',  'User Deleted.');
+        req.flash('success',  'User deleted !');
         res.json({redirect: '/'});
        })
        .catch((err) => {
@@ -93,8 +93,8 @@
       const id = req.params.id;
       const user = req.user;
 
-      req.checkBody('username', 'this field must have a value.').notEmpty();
-      req.checkBody('googleId', 'this field must have a value.').notEmpty();
+      req.checkBody('username', 'this field must have a value !').notEmpty();
+      req.checkBody('googleId', 'this field must have a value !').notEmpty();
 
       let username = req.body.username;
       let googleId = req.body.googleId;
@@ -119,7 +119,7 @@
               new: true,
            }) 
              .then((result) => {
-                 req.flash('success',  'User Updated.');
+                 req.flash('success',  'User updated !');
                  res.status(200).redirect('/admin/users');
              })
              .catch((err) => {

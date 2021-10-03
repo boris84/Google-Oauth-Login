@@ -6,7 +6,7 @@
 
         if(!req.user) {
             // if user is not logged in
-            req.flash('danger',  'Please log in.');
+            req.flash('danger',  'please login !');
             res.redirect('/auth/login');
         } else {
             // if user is logged in
