@@ -29,7 +29,6 @@
                   // already have the user
                   done(null, currentUser);   
                } else {
-                   
                    // if not, create new user in our db
                   new User({
                       username: profile.displayName,
