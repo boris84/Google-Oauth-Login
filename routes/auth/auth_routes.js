@@ -5,8 +5,9 @@
     // OAUTH WITH PASSPORT ROUTES
 
 
+
      // auth login 
-     router.get('/login', (req, res) => {
+     router.get('/login', nocache, (req, res) => {
         res.render('login', { user: req.user });
      });
 
@@ -22,8 +23,8 @@
 
 
      // auth with Google
-     router.get('/google', passport.authenticate('google', {
-         prompt: "select_account",
+     router.get('/google', nocache, passport.authenticate('google', {
+         prompt: "select_account", 
          scope: ['profile']
      }));
 
@@ -36,6 +37,14 @@
     });
 
 
+    // set browser no-cache headers
+    function nocache(req, res, next) {
+     /*post-check=0 tells the cache server not to cache the content at all. You must combine this with no-store, no-cache, must-revalidate, post-check=0, pre-check=0 to also avoid browser caching. It is commonly used for authenticated users sections and to prevent dynamic content caching*/
+        res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate, post-check=0, pre-check=0');
+        res.header('Expires', '-1');
+        res.header('Pragma', 'no-cache');
+        next();
+    }
 
      module.exports = router;
 

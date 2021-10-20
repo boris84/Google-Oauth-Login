@@ -5,7 +5,8 @@
 
     username: String,
     googleId: String,
-    thumbnail: String
+    thumbnail: String,
+    admin: Number
         
     }, { timestamps: true });
 

@@ -11,7 +11,7 @@
     const authCheck = (req, res, next) => {
         if (!req.user) {
         // if user is not logged in
-          req.flash('danger',  'Please log in.');
+          req.flash('danger',  'please log in !');
           res.redirect('/auth/login');
         } else {
           // if user is logged in
@@ -21,7 +21,7 @@
 
 
     // GET all users 
-    router.get('/users', authCheck, (req, res) => {
+    router.get('/users', authCheck, nocache, (req, res) => {
         
       User.find().sort({createdAt: -1})
         .then((users) => {
@@ -37,7 +37,7 @@
 
 
     // GET a user 
-    router.get('/users/:id', authCheck, (req, res) => {
+    router.get('/users/:id', authCheck, nocache, (req, res) => {
       const id = req.params.id;
         
       User.findById(id, {useFindAndModify: false})
@@ -54,7 +54,7 @@
 
 
     // DELETE a user
-    router.delete('/users/:id', authCheck, (req, res) => {
+    router.delete('/users/:id', authCheck, nocache, (req, res) => {
       const id = req.params.id;
         
       // 2. server deletes that document based on the id.
@@ -72,7 +72,7 @@
 
 
     // GET edit form
-    router.get('/users/admin-edit-user/:id', authCheck, (req, res) => {
+    router.get('/users/admin-edit-user/:id', authCheck, nocache, (req, res) => {
       const id = req.params.id;  
 
       User.findById(id, {useFindAndModify: false})
@@ -89,7 +89,7 @@
 
 
     // handle POST edit form
-    router.post('/users/admin-edit-user/:id', authCheck, (req, res) => {
+    router.post('/users/admin-edit-user/:id', authCheck, nocache, (req, res) => {
       const id = req.params.id;
       const user = req.user;
 
@@ -128,6 +128,16 @@
         }
     });
     
+
+
+    // set browser no-cache headers
+    function nocache(req, res, next) {
+     /*post-check=0 tells the cache server not to cache the content at all. You must combine this with no-store, no-cache, must-revalidate, post-check=0, pre-check=0 to also avoid browser caching. It is commonly used for authenticated users sections and to prevent dynamic content caching*/
+        res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate, post-check=0, pre-check=0');
+        res.header('Expires', '-1');
+        res.header('Pragma', 'no-cache');
+        next();
+    }
 
 
     module.exports = router;

@@ -31,14 +31,14 @@
         <div class="main-nav home">
             <nav>
                  <ul>
-                 <% if (!user) {%>
+                 <% if (admin) {%>
+                     <li><a class="btn btn-primary" href="/admin/users">Admin</a></li>
+                     <li><a class="btn btn-primary fw-bold" href="/">Home</a></li>
+                     <li><a class="btn btn-primary" href="/profile">Profile</a></li>
+                 <% } else { %>
                      <li><a class="btn btn-primary fw-bold" href="/">Home</a></li>
                      <li><a class="btn btn-primary" href="/auth/login">Login</a></li>
                      <li><a class="btn btn-primary" href="/profile">Profile</a></li>
-                 <% } else { %>
-                     <li><a class="btn btn-primary" href="/profile">Profile</a></li>
-                     <li><a class="btn btn-primary" href="/admin/users">Admin</a></li>
-                     <li><a class="btn btn-primary" href="/auth/logout">Logout</a></li>
                  <% } %>    
                 </ul>
             </nav>
@@ -76,6 +76,7 @@
             message.style.display = 'none'
         }, 2000);
      }
+
 </script>
 
 

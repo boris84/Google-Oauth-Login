@@ -16,7 +16,7 @@
     // const enforce = require('express-sslify');
     
 
-
+    // initialize express app
     const app = express();
 
 
@@ -139,17 +139,19 @@
 
     // GET home
     app.get('/', (req, res) => {
-        res.render('home', { user: req.user });
+        res.render('home', { 
+            user: req.user, 
+            admin: req.user 
+        });
     });
 
 
 
     // 404 page
     app.use((req, res) => {
-      res.status(404);
-      res.render('404');
+        res.status(404);
+        res.render('404');
     });
-
 
 
 

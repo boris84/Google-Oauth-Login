@@ -23,24 +23,31 @@
             clientID: process.env.CLIENT_ID,
             clientSecret: process.env.CLIENT_SECRET
         }, (accessToken, refreshToken, profile, done) => {
-           // check if user already exists in our database 
-            User.findOne({googleId: profile.id}).then((currentUser) => {
-               if (currentUser) {
-                  // already have the user
-                  done(null, currentUser);   
-               } else {
-                   // if not, create new user in our db
-                  new User({
-                      username: profile.displayName,
-                      googleId: profile.id,
-                      thumbnail: profile.photos[0].value
-                  }).save().then((newUser)=> {
-//                      console.log('new user created:' + newUser);
+            
+        User.findOne({googleId: profile.id}).then((currentUser) => {
+            const adminId = "118286694428325198344";
+                
+            User.findOneAndUpdate({googleId:adminId}, {username:'Admin', googleId:profile.id, thumbnail:profile.photos[0].value, admin:1}, (err, admin) => {
+                if (err) {
+                    throw err;
+                }
+            })
+            
+            if (currentUser) {
+               // if user exists in db
+              done(null, currentUser);
+               // if not, create new user in db
+            } else {
+                 new User({
+                    username: profile.displayName,
+                    googleId: profile.id,
+                    thumbnail: profile.photos[0].value,
+                 }).save().then((newUser)=> {
                       done(null, newUser);
-                  })
-               }
-           })
-        })
+                 })
+              }
+          })
+       })
     )
 
 
