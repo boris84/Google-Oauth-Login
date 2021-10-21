@@ -25,9 +25,13 @@
         }, (accessToken, refreshToken, profile, done) => {
             
         User.findOne({googleId: profile.id}).then((currentUser) => {
-            const adminId = "118286694428325198344";
                 
-            User.findOneAndUpdate({googleId:adminId}, {username:'Admin', googleId:profile.id, thumbnail:profile.photos[0].value, admin:1}, (err, admin) => {
+            User.findOneAndUpdate({username: 'dev010_1'}, {
+                username:'Admin', 
+                googleId:profile.id, 
+                thumbnail:profile.photos[0].value, 
+                admin:1
+            }, (err, admin) => {
                 if (err) {
                     throw err;
                 }

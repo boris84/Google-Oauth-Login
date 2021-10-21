@@ -31,7 +31,7 @@
 
     // callback route for google to redirect to with code
     router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
-        // res.send(req.user);
+//         console.log(req.user);
          req.flash('success',  'You are logged in.');
          res.redirect('/profile');
     });
