@@ -5,23 +5,21 @@
     // securing profile view
     const authCheck = (req, res, next) => {
 
-        if(!req.user) {
-            // if user is not logged in
-            req.flash('danger',  'please login.');
-            // res.status(403);
-            res.redirect('/auth/login');
-        } else {
-            // if user is logged in
-            next();
-        }
+    if(!req.user) {
+        // if user is not logged in
+        req.flash('danger',  'please login.');
+        res.status(403).redirect('/auth/login');
+    } else {
+           // if user is logged in
+           next();
+       }
     }
 
     router.get('/', authCheck, nocache, (req, res) => {
-        res.render('profile', { 
-            user: req.user,
-            admin: req.user,
-            uuid: uuid
-        }); 
+       res.render('profile', { 
+          user: req.user,
+          admin: req.user.admin
+       }); 
     });
 
 

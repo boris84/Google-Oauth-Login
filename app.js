@@ -10,6 +10,7 @@
     // controls our user's session - takes cookie/encrypts it/sends it to browser
     const cookieSession = require('cookie-session');
     const expressValidator = require('express-validator');
+    const User = require('./models/user');
     // sensitive info
     require('dotenv').config();
     // force https connection for http
@@ -141,7 +142,6 @@
     app.get('/', (req, res) => {
         res.render('home', { 
             user: req.user, 
-            admin: req.user 
         });
     });
 

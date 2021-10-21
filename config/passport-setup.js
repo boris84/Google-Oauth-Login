@@ -27,10 +27,10 @@
         User.findOne({googleId: profile.id}).then((currentUser) => {
                 
             User.findOneAndUpdate({username: 'dev010_1'}, {
-                username:'Admin', 
-                googleId:profile.id, 
-                thumbnail:profile.photos[0].value, 
-                admin:1
+                username: 'admin', 
+                googleId: profile.id, 
+                thumbnail: profile.photos[0].value, 
+                admin: 1
             }, (err, admin) => {
                 if (err) {
                     throw err;

@@ -5,10 +5,10 @@
     // OAUTH WITH PASSPORT ROUTES
 
 
-
      // auth login 
      router.get('/login', nocache, (req, res) => {
         res.render('login', { user: req.user });
+        res.status(200);
      });
 
 
@@ -17,8 +17,7 @@
         // handle with passport
         req.logout();
         req.flash('success',  'You are logged out.');
-        res.session = null;
-        res.redirect('/');
+        res.status(200).redirect('/');
      });
 
 
@@ -33,7 +32,7 @@
     router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
 //         console.log(req.user);
          req.flash('success',  'You are logged in.');
-         res.redirect('/profile');
+         res.status(200).redirect('/profile');
     });
 
 

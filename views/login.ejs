@@ -30,15 +30,9 @@
         <div class="main-nav login">
             <nav>
                 <ul>
-                    <% if (user) {%>
-                        <li><a class="btn btn-primary" href="/profile">Profile</a></li>
-                        <li><a class="btn btn-primary" href="/admin/users">Admin</a></li>
-                        <li><a class="btn btn-primary" href="/auth/logout">Logout</a></li>
-                    <% } else { %>
-                        <li><a class="btn btn-primary" href="/">Home</a></li>
-                        <li><a class="btn btn-primary" href="/auth/login">Login</a></li>
-                        <li><a class="btn btn-primary" href="/profile">Profile</a></li>
-                    <% } %>
+                    <li><a class="btn btn-primary" href="/">Home</a></li>
+                    <li><a class="btn btn-primary" href="/auth/login">Login</a></li>
+                    <li><a class="btn btn-primary" href="/profile">Profile</a></li>
                 </ul>
             </nav>
         </div>
