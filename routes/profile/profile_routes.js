@@ -5,6 +5,7 @@
     // securing profile view
     const authCheck = (req, res, next) => {
 
+        
     if(!req.user) {
         // if user is not logged in
         req.flash('danger',  'please login.');
@@ -15,6 +16,7 @@
        }
     }
 
+    
     router.get('/', authCheck, nocache, (req, res) => {
        res.render('profile', { 
           user: req.user,

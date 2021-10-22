@@ -10,12 +10,16 @@
     // secure admin views
     const authCheck = (req, res, next) => {
         if (!req.user) {
-        // if user is not logged in
-          req.flash('danger',  'please log in !');
-          res.redirect('/auth/login');
+            // if user is not logged in
+            req.flash('danger',  'please log in !');
+            res.status(403).redirect('/auth/login');
+        } else if (!req.user.admin) {
+             // if admin is not logged in
+             req.flash('danger',  'not authorized.');
+             res.status(403).redirect('/profile');
         } else {
-          // if user is logged in
-          next();
+             // if user logged in
+             next();
         }
     }
 
