@@ -5,11 +5,11 @@
     // connect to db and interact with model
     const mongoose = require('mongoose');
     // used for flash messaging
-    const session = require('express-session');
     const flash = require('connect-flash');
     // controls our user's session - takes cookie/encrypts it/sends it to browser
     const cookieSession = require('cookie-session');
     const expressValidator = require('express-validator');
+    const helmet = require('helmet');
     const User = require('./models/user');
     // sensitive info
     require('dotenv').config();
@@ -25,6 +25,14 @@
     // register view engine
     app.set('view engine', 'ejs');
 
+
+
+    // This sets custom options for the `referrerPolicy` middleware.
+//    app.use(
+//        helmet.csp({directives: {
+//            defaultSrc: [" 'self' https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js "]
+//        }})
+//    );
  
 
    // when we deploy our application, the server most likely isn't going to run it on 5000, it's going to have the port number in an enviroment variable so we want to check that first, if  that's not available then we want to run it on port 5000. 
@@ -66,20 +74,13 @@
 
     // cookie-session middleware
     app.use(cookieSession({
-        maxAge: 24 * 60 * 60 * 1000,
-        keys:[process.env.SESSION_COOKIE_KEY]
+    /* secure: true, - browser will only set cookie if connection is secure *SECURITY*
+        sameSite: 'Strict', - browser will only send cookie if the request is from the samesite *SECURITY*
+        httpOnly: true, - cookie will not be accessible from javascript and will only transferred via http protocol *SECURITY*
+    */ maxAge: 24 * 60 * 60 * 1000,
+        keys: [process.env.SESSION_COOKIE_KEY]
     }));
 
-
-
-    // express session middleware
-    app.use(session({
-      secret: 'keyboard cat',
-      resave: false,
-      saveUninitialized: true,
-      cookie: { secure: true }
-    }))
-     
 
 
     // express validator middleware
