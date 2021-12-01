@@ -31,7 +31,7 @@
   <!-- /.container -->
   <main role="main" class="container">
     <div class="row">
-      <div class="col-xl-4 col-md-6 col-sm-8 mx-auto">
+      <div class="col-xl-4 col-lg-6 col-md-8 col-sm-10 mx-auto">
 
         <div class="main-nav comment">
             <nav>
@@ -49,9 +49,7 @@
                 
                 
         <div class="main-title comment">
-           <header>
               <h3 class="text-dark text-center">Send a message</h3>
-           </header>
         </div>        
                   
     
@@ -62,7 +60,9 @@
                     <img src="<%= user.thumbnail %>"/>
                         <h6><%= user.username %></h6>
                         <div class="mb-2">
-                            <textarea name="comment" rows="4" cols="50"></textarea>
+                            <!--  add form control property to fix one sided padding issue inside container for forms -->
+                            <textarea name="comment" placeholder="Enter your message here." rows="4" 
+                            cols="37" class="form-control form-control-sm" aria-describedby="comment"></textarea> 
                         </div>
                         <button type="submit" class="btn btn-sm btn-primary">Submit</button>
                   </div>

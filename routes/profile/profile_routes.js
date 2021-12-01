@@ -40,7 +40,7 @@
       const id = req.params.id;
       const user = req.user;
 
-      req.checkBody('comment', 'leave a short message for simon').notEmpty();
+      req.checkBody('comment', "the developer would appreciate your feedback.").notEmpty();
 
       let comment = req.body.comment;
       let errors = req.validationErrors();

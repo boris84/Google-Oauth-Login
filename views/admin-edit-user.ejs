@@ -61,10 +61,12 @@
 
                     <div class="mb-2">
                         <label for="username" class="username">Username</label>
+                        <!--  add form control property to fix one sided padding issue inside container for forms -->
                         <input type="text" name="username" value="<%= user.username %>" class="form-control form-control-sm" aria-describedby="username">
                     </div>
                     <div class="mb-3">
                         <label for="GoogleId" class="form-label">GoogleId</label>
+                        <!--  add form control property to fix one sided padding issue inside container for forms -->
                         <input type="password" name="googleId" value="<%= user.googleId %>" class="form-control form-control-sm" aria-describedby="userId" readonly>
                     </div>
                         <button type="submit" class="btn btn-sm btn-primary">Submit</button>
