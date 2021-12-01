@@ -11,7 +11,8 @@
 </head>
 <body>
    
-
+   
+<!-- messages -->
 <div style="height:0">
    <div class="row ">
       <div class="message">
@@ -20,21 +21,23 @@
    </div>
 </div>
        
-   
+
+<!-- /.container -->
 <main role="main" class="container">
   <div class="row">
-     <div class="col-xl-4  col-md-6 col-sm-8 mx-auto">
+     <div class="col-xl-4 col-md-6 col-sm-8 mx-auto">
      
         <div class="main-nav profile">
             <nav>
                 <ul>
                 <% if (admin) { %>
-                <li><a class="btn btn-primary" href="/">Home</a></li>
-                <li><a class="btn btn-primary" href="/auth/logout"  onclick="signOut();">Logout</a></li>
-                <li><a class="btn btn-primary" href="/admin/users">Admin</a></li>
+                    <li><a class="btn btn-primary" href="/">Home</a></li>
+                    <li><a class="btn btn-primary" href="/auth/logout"  onclick="signOut();">Logout</a></li>
+                    <li><a class="btn btn-primary" href="/admin/users">Admin</a></li>
                 <% } else { %>
-                <li><a class="btn btn-primary" href="/">Home</a></li>
-                <li><a class="btn btn-primary" href="/auth/logout"  onclick="signOut();">Logout</a></li>
+                    <li><a class="btn btn-primary" href="/">Home</a></li>
+                    <li><a class="btn btn-primary" href="/auth/logout"  onclick="signOut();">Logout</a></li>
+                    <li><a class="btn btn-primary" href="/profile/comment/<%= user.id %>">Message</a></li>
                 <% } %>
                 </ul>
             </nav>
@@ -55,7 +58,6 @@
         <div class="main-content profile">
             <img src="<%= user.thumbnail %>"alt="profile picture"/>
             <h6><%= user.username %></h6>
-            <p>This is your profile thumbnail</p>
         </div>
 
 
@@ -66,6 +68,7 @@
        </div>
    </div>
 </main>
+<!-- /.container -->
 
    
 <script>

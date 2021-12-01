@@ -6,6 +6,7 @@
     username: String,
     googleId: String,
     thumbnail: String,
+    comment: String,
     admin: Number
         
     }, { timestamps: true });

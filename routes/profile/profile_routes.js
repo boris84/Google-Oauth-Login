@@ -1,5 +1,7 @@
     const router = require('express').Router();
     const uuid = require('uuid');
+    const User = require('../../models/user');
+
 
 
     // securing profile view
@@ -24,6 +26,50 @@
        }); 
     });
 
+
+    router.get('/comment/:id', authCheck, nocache, (req, res) => {
+    const id = req.params.id;
+
+       res.render('comment', {
+          user: req.user
+       }); 
+    });
+
+
+    router.post('/comment/:id', authCheck, nocache, (req, res) => {
+      const id = req.params.id;
+      const user = req.user;
+
+      req.checkBody('comment', 'leave a short message for simon').notEmpty();
+
+      let comment = req.body.comment;
+      let errors = req.validationErrors();
+        
+      if (errors) {
+          res.render('comment', {
+              user: user,
+              errors: errors,
+              comment: user.comment
+          })
+      } else {
+           User.findOneAndUpdate({_id: id}, {
+             comment: comment
+           }, 
+           {
+              upsert: true,
+              new: true,
+           }) 
+             .then((result) => {
+                 req.flash('success',  'Message sent !');
+                 res.status(200).redirect('/profile');
+             })
+             .catch((err) => {
+                 console.log(err)
+             })
+        }
+    });
+    
+    
 
     // set browser no-cache headers
     function nocache(req, res, next) {

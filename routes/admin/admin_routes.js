@@ -31,6 +31,7 @@
         .then((users) => {
           res.render('admin-users', {
             users: users,
+            admin: req.user.admin
           });
         })
         .catch((err) => {

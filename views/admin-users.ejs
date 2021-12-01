@@ -11,7 +11,8 @@
   </head>
   <body>
    
-    
+   
+<!-- messages -->
   <div style="height:0">
      <div class="row ">
         <div class="message">
@@ -24,7 +25,7 @@
   <!-- /.container -->
   <main role="main" class="container">
     <div class="row">
-      <div class="col-xl-4 col-lg-4 col-md-6 col-sm-8 mx-auto">
+      <div class="col-xl-4 col-md-6 col-sm-8 mx-auto">
     
       <div class="main-nav admin">
           <nav>
@@ -49,15 +50,19 @@
       <div class="main-content admin"> 
           <% if (users.length > 0) { %>
               <table class="table table table-bordered">                        
-                  <tr>
+                  <tr>           
                       <th class="text-white text-center bg-dark">Username</th>
-                      <th class="text-white text-center bg-dark">GoogleId</th>
+                      <th class="text-white text-center bg-dark">Message</th>
                   </tr>
-                  <% users.forEach(user => { %>
+             <% users.forEach(user => { %>
+                  <% if (user.admin) { %>
+                        <!-- display nothing -->
+                  <% } else { %>
                       <tr data-href="/admin/users/<%= user._id %>">
                       <td class="col-sm-3 border text-center border-dark"><%= user.username %></td>
-                      <td class="col-sm-3 border text-center border-dark"><%= user.googleId %></td>
-                  </tr> 
+                      <td class="col-sm-3 border text-center border-dark"><%= user.comment %></td>
+                      </tr> 
+                  <% } %>
               <% }); %>
           <% } else { %>    
                       <p class="text-center">Oops there's nothing here right now..  try back later!</p>
