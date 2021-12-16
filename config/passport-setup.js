@@ -44,7 +44,7 @@
                  new User({
                     username: profile.displayName,
                     googleId: profile.id,
-                    thumbnail: profile._json.picture,
+                    thumbnail: profile.photos[0].value,
                  }).save().then((newUser)=> {
                       // moves on the the serializeUser function
                       done(null, newUser);

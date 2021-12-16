@@ -7,6 +7,7 @@
 
      // auth login 
      router.get('/login', nocache, (req, res) => {
+        res.setHeader("Content-Security-Policy", "script-src 'self' https://cdn.jsdelivr.net https://kit.fontawesome.com 'unsafe-inline' ");
         res.render('login', { user: req.user });
         res.status(200);
      });
@@ -16,7 +17,8 @@
      router.get('/logout', (req, res) => {
         // handle with passport
         req.logout();
-        req.flash('success',  'You are logged out.');
+        req.flash('success', 'You are logged out.');
+        res.setHeader("Content-Security-Policy", "script-src 'self' https://kit.fontawesome.com https://cdn.jsdelivr.net ");
         res.status(200).redirect('/');
      });
 
@@ -30,7 +32,7 @@
 
     // callback route for google to redirect to with code
     router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
-//         console.log(req.user);
+         // console.log(req.user);
          req.flash('success',  'You are logged in.');
          res.status(200).redirect('/profile');
     });

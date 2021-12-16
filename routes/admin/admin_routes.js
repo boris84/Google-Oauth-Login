@@ -10,47 +10,50 @@
     // secure admin views
     const authCheck = (req, res, next) => {
         if (!req.user) {
-            // if user is not logged in
-            req.flash('danger',  'please log in !');
+            // if user is not logged in and tries to access admin area 
+            req.flash('danger', 'please log in !');
             res.status(403).redirect('/auth/login');
         } else if (!req.user.admin) {
-             // if admin is not logged in
-             req.flash('danger',  'not authorized.');
+             // if user is logged in and tries to access admin area
+             req.flash('danger', 'not authorized.');
              res.status(403).redirect('/profile');
         } else {
-             // if user logged in
+             // if user is admin
              next();
         }
     }
 
 
-    // GET all users 
+    // get users 
     router.get('/users', authCheck, nocache, (req, res) => {
         
-      User.find().sort({createdAt: -1})
-        .then((users) => {
-          res.render('admin-users', {
-            users: users,
-            admin: req.user.admin
-          });
-        })
-        .catch((err) => {
-          console.log(err);
-        })
+    User.find().sort({createdAt: -1})
+       .then((users) => {
+           res.setHeader("Content-Security-Policy", "script-src 'self' https://cdn.jsdelivr.net  https://kit.fontawesome.com 'unsafe-inline'");
+           res.render('admin-users', {
+               users: users,
+               admin: req.user.admin
+           });
+       })
+       .catch((err) => {
+           console.log(err);
+       })
     });
 
 
 
-    // GET a user 
+    // get user 
     router.get('/users/:id', authCheck, nocache, (req, res) => {
-      const id = req.params.id;
+    res.setHeader("Content-Security-Policy", "script-src 'self' https://cdn.jsdelivr.net https://kit.fontawesome.com 'unsafe-inline' ");
+
+    const id = req.params.id;
         
-      User.findById(id, {useFindAndModify: false})
+    User.findById(id, {useFindAndModify: false})
        .then((user) => {
-         res.render('admin-details', {
-           user: user
-         });
-       })
+           res.render('admin-details', {
+               user: user
+           });
+        })
        .catch((err) => {
          console.log(err);
        });
@@ -58,7 +61,7 @@
 
 
 
-    // DELETE a user
+    // delete user
     router.delete('/users/:id', authCheck, nocache, (req, res) => {
       const id = req.params.id;
         
@@ -76,9 +79,11 @@
 
 
 
-    // GET edit form
+    // get edit
     router.get('/users/admin-edit-user/:id', authCheck, nocache, (req, res) => {
-      const id = req.params.id;  
+    res.setHeader("Content-Security-Policy", "script-src 'self' https://cdn.jsdelivr.net https://kit.fontawesome.com  ");
+
+    const id = req.params.id;  
 
       User.findById(id, {useFindAndModify: false})
        .then((result) => {
@@ -93,8 +98,8 @@
 
 
 
-    // handle POST edit form
-    router.post('/users/admin-edit-user/:id', authCheck, nocache, (req, res) => {
+    // post edit
+    router.post('/users/admin-edit-user/:id', authCheck, nocache, (req, res) => {    
       const id = req.params.id;
       const user = req.user;
 
@@ -106,31 +111,31 @@
         
       let errors = req.validationErrors();
         
-      if (errors) {
-          res.render('admin-edit-user', {
-              user: user,
-              errors: errors,
-              username: user.username,
-              googleId: user.googleId,
-              thumbnail: user.thumbnail
+    if (errors) {
+      res.render('admin-edit-user', {
+         user: user,
+         errors: errors,
+         username: user.username,
+         googleId: user.googleId,
+         thumbnail: user.thumbnail
+      })
+    } else {
+         User.findOneAndUpdate({_id: id}, {
+            username: username,
+            googleId: googleId,
+         }, 
+         {
+            upsert: true,
+            new: true,
+         }) 
+          .then((result) => {
+             req.flash('success',  'User updated !');
+             res.status(200).redirect('/admin/users');
           })
-      } else {
-           User.findOneAndUpdate({_id: id}, {
-              username: username,
-              googleId: googleId,
-           }, 
-           {
-              upsert: true,
-              new: true,
-           }) 
-             .then((result) => {
-                 req.flash('success',  'User updated !');
-                 res.status(200).redirect('/admin/users');
-             })
-             .catch((err) => {
-                 console.log(err)
-             })
-        }
+          .catch((err) => {
+             console.log(err)
+          })
+       }
     });
     
 

@@ -14,12 +14,14 @@
         res.status(403).redirect('/auth/login');
     } else {
            // if user is logged in
-           next();
+        next();
        }
     }
 
     
+    // profile page
     router.get('/', authCheck, nocache, (req, res) => {
+       res.setHeader("Content-Security-Policy", "script-src 'self' https://cdn.jsdelivr.net https://kit.fontawesome.com 'unsafe-inline' ");
        res.render('profile', { 
           user: req.user,
           admin: req.user.admin
@@ -27,46 +29,50 @@
     });
 
 
+    // get comment
     router.get('/comment/:id', authCheck, nocache, (req, res) => {
-    const id = req.params.id;
-
+       const id = req.params.id;
+       res.setHeader("Content-Security-Policy", "script-src 'self' https://cdn.jsdelivr.net https://kit.fontawesome.com  ");
        res.render('comment', {
           user: req.user
        }); 
     });
 
 
+    // post comment
     router.post('/comment/:id', authCheck, nocache, (req, res) => {
+    res.setHeader("Content-Security-Policy", "script-src 'self' https://cdn.jsdelivr.net https://kit.fontawesome.com ");
+
       const id = req.params.id;
       const user = req.user;
 
-      req.checkBody('comment', "the developer would appreciate your feedback.").notEmpty();
+    req.checkBody('comment', "the developer would appreciate your feedback.").notEmpty();
 
       let comment = req.body.comment;
       let errors = req.validationErrors();
         
-      if (errors) {
-          res.render('comment', {
-              user: user,
-              errors: errors,
-              comment: user.comment
-          })
-      } else {
-           User.findOneAndUpdate({_id: id}, {
-             comment: comment
-           }, 
-           {
-              upsert: true,
-              new: true,
-           }) 
-             .then((result) => {
-                 req.flash('success',  'Message sent !');
-                 res.status(200).redirect('/profile');
-             })
-             .catch((err) => {
-                 console.log(err)
-             })
-        }
+    if (errors) {
+        res.render('comment', {
+            user: user,
+            errors: errors,
+            comment: user.comment
+        })
+    } else {
+        User.findOneAndUpdate({_id: id}, {
+            comment: comment
+        },
+        {
+            upsert: true,
+            new: true,
+       }) 
+       .then((result) => {
+            req.flash('success',  'Message sent !');
+            res.status(200).redirect('/profile');
+       })
+       .catch((err) => {
+            console.log(err)
+        })
+      }
     });
     
     
