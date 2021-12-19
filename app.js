@@ -141,7 +141,6 @@
 
     // GET home
     app.get('/', (req, res) => {
-        res.setHeader("Content-Security-Policy", "script-src 'self' https://cdn.jsdelivr.net https://kit.fontawesome.com 'unsafe-inline' ");
         res.render('home', { 
             user: req.user, 
         });

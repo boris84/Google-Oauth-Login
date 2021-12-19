@@ -32,11 +32,11 @@
                 <ul>
                 <% if (admin) { %>
                     <li><a class="btn btn-primary" href="/">Home</a></li>
-                    <li><a class="btn btn-primary" href="/auth/logout"  onclick="signOut();">Logout</a></li>
+                    <li><a class="btn btn-primary" href="/auth/logout">Logout</a></li>
                     <li><a class="btn btn-primary" href="/admin/users">Admin</a></li>
                 <% } else { %>
                     <li><a class="btn btn-primary" href="/">Home</a></li>
-                    <li><a class="btn btn-primary" href="/auth/logout"  onclick="signOut();">Logout</a></li>
+                    <li><a class="btn btn-primary" href="/auth/logout">Logout</a></li>
                     <li><a class="btn btn-primary" href="/profile/comment/<%= user.id %>">Message</a></li>
                 <% } %>
                 </ul>

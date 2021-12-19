@@ -29,7 +29,6 @@
         
     User.find().sort({createdAt: -1})
        .then((users) => {
-           res.setHeader("Content-Security-Policy", "script-src 'self' https://cdn.jsdelivr.net  https://kit.fontawesome.com 'unsafe-inline'");
            res.render('admin-users', {
                users: users,
                admin: req.user.admin
@@ -44,7 +43,6 @@
 
     // get user 
     router.get('/users/:id', authCheck, nocache, (req, res) => {
-    res.setHeader("Content-Security-Policy", "script-src 'self' https://cdn.jsdelivr.net https://kit.fontawesome.com 'unsafe-inline' ");
 
     const id = req.params.id;
         
@@ -81,7 +79,6 @@
 
     // get edit
     router.get('/users/admin-edit-user/:id', authCheck, nocache, (req, res) => {
-    res.setHeader("Content-Security-Policy", "script-src 'self' https://cdn.jsdelivr.net https://kit.fontawesome.com  ");
 
     const id = req.params.id;  
 
