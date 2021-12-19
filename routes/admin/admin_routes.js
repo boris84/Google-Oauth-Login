@@ -109,13 +109,14 @@
       let errors = req.validationErrors();
         
     if (errors) {
-      res.render('admin-edit-user', {
-         user: user,
-         errors: errors,
-         username: user.username,
-         googleId: user.googleId,
-         thumbnail: user.thumbnail
-      })
+        User.findById(id, {useFindAndModify: false})
+           .then((user) => {
+               res.render('admin-edit-user', {
+                   user: user,
+                   errors: errors
+               });
+            })
+     
     } else {
          User.findOneAndUpdate({_id: id}, {
             username: username,
