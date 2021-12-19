@@ -1,13 +1,13 @@
     const router = require('express').Router();
     const passport = require('passport');
-//    const csp = require('../../config/csp');
+
+
 
     // OAUTH WITH PASSPORT ROUTES
 
 
      // auth login 
      router.get('/login', nocache, (req, res) => {
-//        res.setHeader("Content-Security-Policy", csp);
         res.render('login', { user: req.user });
         res.status(200);
      });
@@ -18,7 +18,6 @@
         // handle with passport
         req.logout();
         req.flash('success', 'You are logged out.');
-//        res.setHeader("Content-Security-Policy", csp);
         res.status(200).redirect('/');
      });
 
@@ -32,7 +31,6 @@
 
     // callback route for google to redirect to with code
     router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
-//        res.setHeader("Content-Security-Policy", csp);
         // console.log(req.user);
          req.flash('success',  'You are logged in.');
          res.status(200).redirect('/profile');
