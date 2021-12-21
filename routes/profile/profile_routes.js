@@ -41,19 +41,18 @@
     // post comment
     router.post('/comment/:id', authCheck, nocache, (req, res) => {
 
-      const id = req.params.id;
-      const user = req.user;
-
-    req.checkBody('comment', "the developer would appreciate your feedback.").notEmpty();
-
+      let id = req.params.id;
       let comment = req.body.comment;
+      let user = req.user;
+        
+      req.checkBody('comment', "the developer appreciates your feedback.").notEmpty();
+
       let errors = req.validationErrors();
         
     if (errors) {
         res.render('comment', {
             user: user,
-            errors: errors,
-            comment: user.comment
+            errors: errors
         })
     } else {
         User.findOneAndUpdate({_id: id}, {

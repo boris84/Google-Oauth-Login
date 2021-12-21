@@ -97,43 +97,41 @@
 
     // post edit
     router.post('/users/admin-edit-user/:id', authCheck, nocache, (req, res) => {    
-      const id = req.params.id;
-      const user = req.user;
+      let id = req.params.id;
+      let username = req.body.username;
+      let googleId = req.body.googleId;
 
       req.checkBody('username', 'this field must have a value !').notEmpty();
       req.checkBody('googleId', 'this field must have a value !').notEmpty();
 
-      let username = req.body.username;
-      let googleId = req.body.googleId;
-        
       let errors = req.validationErrors();
-        
-    if (errors) {
-        User.findById(id, {useFindAndModify: false})
-           .then((user) => {
-               res.render('admin-edit-user', {
-                   user: user,
-                   errors: errors
-               });
+
+      if (errors) {
+         User.findById(id, {useFindAndModify: false})
+            .then((user) => {
+                res.render('admin-edit-user', {
+                    user: user,
+                    errors: errors
+                });
             })
-     
-    } else {
-         User.findOneAndUpdate({_id: id}, {
-            username: username,
-            googleId: googleId,
-         }, 
-         {
-            upsert: true,
-            new: true,
-         }) 
-          .then((result) => {
-             req.flash('success',  'User updated !');
-             res.status(200).redirect('/admin/users');
-          })
-          .catch((err) => {
-             console.log(err)
-          })
-       }
+
+       } else {
+            User.findOneAndUpdate({_id: id}, {
+               username: username,
+               googleId: googleId,
+             }, 
+             {
+                upsert: true,
+                new: true,
+             }) 
+              .then((result) => {
+                 req.flash('success',  'User updated !');
+                 res.status(200).redirect('/admin/users');
+             })
+              .catch((err) => {
+                 console.log(err)
+             })
+          }
     });
     
 
