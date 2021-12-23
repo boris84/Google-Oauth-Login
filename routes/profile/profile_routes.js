@@ -45,7 +45,7 @@
       let comment = req.body.comment;
       let user = req.user;
         
-      req.checkBody('comment', "the developer appreciates your feedback.").notEmpty();
+      req.checkBody('comment', "The developer appreciates your feedback.").notEmpty();
 
       let errors = req.validationErrors();
         
@@ -63,8 +63,10 @@
             new: true,
        }) 
        .then((result) => {
-            req.flash('success',  'Message sent !');
-            res.status(200).redirect('/profile');
+            setTimeout(() => {
+                req.flash('success',  'Message sent !');
+                res.status(200).redirect('/profile');
+            }, 1000)
        })
        .catch((err) => {
             console.log(err)

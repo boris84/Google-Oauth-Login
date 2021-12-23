@@ -72,10 +72,12 @@
                 <h6><%= user.username %></h6>
                 
                 <div class="form mb-2">
-                <!--  add form control property to fix one sided padding issue inside container for forms -->
-                <textarea id="textarea" name="comment" placeholder="Enter your message here." rows="4" 
-                cols="37" class="form-control form-control-sm" aria-describedby="comment"></textarea> 
-                <small id="small">error</small>
+                        <!--  add form control property to fix one sided padding issue inside container for forms -->
+                        <textarea id="textarea" name="comment" placeholder="Enter your message here." rows="4" 
+                        cols="37" class="form-control form-control-sm" aria-describedby="comment"></textarea>
+                        <i class="fas fa-check-circle"></i> 
+                        <i class="fas fa-exclamation-circle"></i>
+                        <small>error</small>
                 </div>
                 
                 <button type="submit" class="btn btn-sm btn-primary">Submit</button>

@@ -101,8 +101,8 @@
       let username = req.body.username;
       let googleId = req.body.googleId;
 
-      req.checkBody('username', 'this field must have a value !').notEmpty();
-      req.checkBody('googleId', 'this field must have a value !').notEmpty();
+      req.checkBody('username', 'This field must have a value !').notEmpty();
+      req.checkBody('googleId', 'This field must have a value !').notEmpty();
 
       let errors = req.validationErrors();
 

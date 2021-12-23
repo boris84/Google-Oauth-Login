@@ -90,9 +90,25 @@
     padding-bottom: 17px;
 }
 
-.main-content.comment .form #small {
+.main-content.comment .form i.fa-check-circle {
+    visibility: hidden;
     position: absolute;
-    color: red;
+    color: #00f300;
+    top: 8px;
+    right: 8px;
+}
+
+.main-content.comment .form i.fa-exclamation-circle {
+    visibility: hidden;
+    position: absolute;
+    color: #f41414;
+    top: 8px;
+    right: 8px;
+}
+
+.main-content.comment .form small {
+    position: absolute;
+    color: #f41414;
     visibility: hidden;
 }
 
