@@ -70,7 +70,7 @@
     // allows us to handle form submissions / url encoded data.
     app.use(express.urlencoded({ extended: false }));
 
-     
+
 
     // cookie-session middleware
     app.use(cookieSession({

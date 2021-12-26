@@ -2,6 +2,7 @@
     const GoogleStrategy = require('passport-google-oauth20');
     const User = require('../models/user');
     require('dotenv').config();
+    
 
 
     // taking the user from the passport callback funtion and taking the id from the user to stuff in a cookie and sent it to browser

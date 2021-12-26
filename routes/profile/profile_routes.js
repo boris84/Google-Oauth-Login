@@ -7,7 +7,6 @@
     // securing profile view
     const authCheck = (req, res, next) => {
 
-        
     if(!req.user) {
         // if user is not logged in
         req.flash('danger',  'please login.');
@@ -63,10 +62,8 @@
             new: true,
        }) 
        .then((result) => {
-            setTimeout(() => {
                 req.flash('success',  'Message sent !');
                 res.status(200).redirect('/profile');
-            }, 1000)
        })
        .catch((err) => {
             console.log(err)

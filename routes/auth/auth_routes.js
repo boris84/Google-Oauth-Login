@@ -1,10 +1,10 @@
     const router = require('express').Router();
     const passport = require('passport');
-
+    const stateURI = require('../../public/js/state');
+    
 
 
     // OAUTH WITH PASSPORT ROUTES
-
 
      // auth login 
      router.get('/login', nocache, (req, res) => {
@@ -25,13 +25,21 @@
      // auth with Google
      router.get('/google', nocache, passport.authenticate('google', {
          prompt: "select_account", 
-         scope: ['profile']
+         scope: ['profile'],
+         state: stateURI
      }));
 
 
     // callback route for google to redirect to with code
-    router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
-        // console.log(req.user);
+    router.get('/google/redirect', function(req, res, next) {
+     // Tricking the user into using the attrackers authorisation code (instead of users) by clicking some link, so that access token recieved by client is not assigned to the user's resources but attackers. There is a possibily that the response from this apps initial request is not from google, so before we exchange the code for the token we check for a state parameter value and compare it with the state parameter value that our client request initiated originally to prevent CSRF attacks
+        if (req.query.state !== stateURI) {
+             req.flash('danger', 'not authorized.');
+             res.status(403).redirect('/auth/login');
+        } else {
+             next();
+        } // passport takes back authorisation code in exchange for access token and when it comes back fires the passport callback function
+    }, passport.authenticate('google'), (req, res) => {  
          req.flash('success',  'You are logged in.');
          res.status(200).redirect('/profile');
     });

@@ -8,6 +8,7 @@ const errorElement = document.getElementsByTagName('small');
 
 form.addEventListener('submit', (e) => {
     
+    
     let textareaTrimmed = textarea.value.trim();
     let messages = [];
     
@@ -22,33 +23,35 @@ form.addEventListener('submit', (e) => {
         errorElement[0].innerText = "Success, thank you.";
           
         setTimeout(() => {
-            textarea.style.borderColor = '#ced4da';
-            checkCircle.style.visibility = 'hidden';
-            errorElement[0].style.visibility = 'hidden';
+        textarea.style.borderColor = '#ced4da';
+        checkCircle.style.visibility = 'hidden';
+        errorElement[0].style.visibility = 'hidden';
         }, 1000);
     }
     
     
+    
     // check input for possible malicious code
-    if (textareaTrimmed.includes('<') || textareaTrimmed.includes('>') || textareaTrimmed.includes('<script>') || textareaTrimmed.includes('</script>') || textareaTrimmed.includes('alert()') || textareaTrimmed.includes('src') || textareaTrimmed.includes('img')) {
+    if (textareaTrimmed.includes('<') || textareaTrimmed.includes('>') || textareaTrimmed.includes('/>') || textareaTrimmed.includes('=') || textareaTrimmed.includes('script') ||  textareaTrimmed.includes('alert()') || textareaTrimmed.includes('src') || textareaTrimmed.includes('img') || textareaTrimmed.includes('onerror')) {
         
-        e.preventDefault();
-        textarea.style.borderColor = '#f41414';
-        exclamationCircle.style.visibility = 'visible';
-        checkCircle.style.visibility = 'hidden';
+         e.preventDefault();
+         textarea.style.borderColor = '#f41414';
+         exclamationCircle.style.visibility = 'visible';
+         checkCircle.style.visibility = 'hidden';
 
-        errorElement[0].style.visibility = 'visible';
-        errorElement[0].style.color = '#f41414';
+         errorElement[0].style.visibility = 'visible';
+         errorElement[0].style.color = '#f41414';
         
-        errorElement[0].innerText = "Invalid input. Please enter a message.";
+         errorElement[0].innerText = "Invalid input. Please enter a message.";
          
-        setTimeout(() => {
-            textarea.style.borderColor = '#ced4da';
-            exclamationCircle.style.visibility = 'hidden';
-            errorElement[0].style.visibility = 'hidden';
-        }, 1000);
+         setTimeout(() => {
+         textarea.style.borderColor = '#ced4da';
+         exclamationCircle.style.visibility = 'hidden';
+         errorElement[0].style.visibility = 'hidden';
+         }, 1000);
      }
       
+    
     
     // if no input
     if (!textareaTrimmed) {
@@ -59,12 +62,15 @@ form.addEventListener('submit', (e) => {
         errorElement[0].innerText = "Please enter a message.";
          
         setTimeout(() => {
-            textarea.style.borderColor = '#ced4da';
-            exclamationCircle.style.visibility = 'hidden';
-            errorElement[0].style.visibility = 'hidden';
+        textarea.style.borderColor = '#ced4da';
+        exclamationCircle.style.visibility = 'hidden';
+        errorElement[0].style.visibility = 'hidden';
         }, 1000);
      }
     
 })
-    
+
+
+
+
                     
