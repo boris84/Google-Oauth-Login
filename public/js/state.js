@@ -1,16 +1,12 @@
-    const bcrypt = require('bcryptjs'); 
-    require('dotenv').config();
+    // Generate a unique random state parameter value using crypto
+    let Crypto = require('crypto')
 
-    // random state parameter value to help prevent against XSS attacks
-    const stateURI = bcrypt.hashSync(process.env.STATE_URI, 8);
-    module.exports = stateURI;
-
-
-
-
-
-
-
+    function createString(size = 21) {  
+        return Crypto.randomBytes(size).toString('base64').slice(0, size)
+    }
+    
+    let state = createString();
+    module.exports = state;
 
 
 

@@ -1,6 +1,8 @@
     const router = require('express').Router();
     const passport = require('passport');
-    const stateURI = require('../../public/js/state');
+    const Crypto = require('crypto')
+    let state = require('../../public/js/state');
+    // console.log(state)
     
 
 
@@ -26,20 +28,31 @@
      router.get('/google', nocache, passport.authenticate('google', {
          prompt: "select_account", 
          scope: ['profile'],
-         state: stateURI
+         state: state
      }));
 
 
     // callback route for google to redirect to with code
     router.get('/google/redirect', function(req, res, next) {
+      // console.log(state)
      // Tricking the user into using the attrackers authorisation code (instead of users) by clicking some link, so that access token recieved by client is not assigned to the user's resources but attackers. There is a possibily that the response from this apps initial request is not from google, so before we exchange the code for the token we check for a state parameter value and compare it with the state parameter value that our client request initiated originally to prevent CSRF attacks
-        if (req.query.state !== stateURI) {
+        if (req.query.state !== state) {
              req.flash('danger', 'not authorized.');
              res.status(403).redirect('/auth/login');
         } else {
              next();
-        } // passport takes back authorisation code in exchange for access token and when it comes back fires the passport callback function
-    }, passport.authenticate('google'), (req, res) => {  
+          }
+        // passport takes back authorisation code in exchange for access token and when it comes back fires the passport callback function
+    } , passport.authenticate('google'), (req, res) => {
+        // after exhchanging authoristion code for access token, reverse the state to return a different value the next time a user logs in
+         if (req.user) {
+             function createString(size = 21) {  
+                 return Crypto.randomBytes(size).toString('base64').slice(0, size);
+            }
+             state = createString();
+             // console.log(state)
+         }
+         state = require('../../public/js/state');
          req.flash('success',  'You are logged in.');
          res.status(200).redirect('/profile');
     });

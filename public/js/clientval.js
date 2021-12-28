@@ -9,8 +9,8 @@ const errorElement = document.getElementsByTagName('small');
 form.addEventListener('submit', (e) => {
     
     
-    let textareaTrimmed = textarea.value.trim();
-    let messages = [];
+    const textareaTrimmed = textarea.value.trim();
+    const allowedChars = "";
     
     
     // if valid input

@@ -12,7 +12,7 @@
         req.flash('danger',  'please login.');
         res.status(403).redirect('/auth/login');
     } else {
-           // if user is logged in
+        // if user is logged in
         next();
        }
     }
@@ -44,7 +44,7 @@
       let comment = req.body.comment;
       let user = req.user;
         
-      req.checkBody('comment', "The developer appreciates your feedback.").notEmpty();
+      req.checkBody('comment', "Message body cannot be empty.").notEmpty();
 
       let errors = req.validationErrors();
         
