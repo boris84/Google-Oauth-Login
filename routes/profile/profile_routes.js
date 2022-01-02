@@ -3,7 +3,6 @@
     const User = require('../../models/user');
 
 
-
     // securing profile view
     const authCheck = (req, res, next) => {
 

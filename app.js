@@ -77,7 +77,8 @@
     /* secure: true, - browser will only set cookie if connection is secure *SECURITY*
         sameSite: 'Strict', - browser will only send cookie if the request is from the samesite *SECURITY*
         httpOnly: true, - cookie will not be accessible from javascript and will only transferred via http protocol *SECURITY*
-    */ maxAge: 24 * 60 * 60 * 1000,
+    */ name: 'session',
+        maxAge: 24 * 60 * 60 * 1000,
         keys: [process.env.SESSION_COOKIE_KEY]
     }));
 
@@ -126,7 +127,7 @@
     app.use(passport.initialize());
     app.use(passport.session());
 
-
+   
 
     // set up routes
     const adminRoutes = require('./routes/admin/admin_routes');

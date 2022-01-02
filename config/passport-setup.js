@@ -2,7 +2,7 @@
     const GoogleStrategy = require('passport-google-oauth20');
     const User = require('../models/user');
     require('dotenv').config();
-    
+
 
 
     // taking the user from the passport callback funtion and taking the id from the user to stuff in a cookie and sent it to browser
@@ -18,13 +18,17 @@
     });
 
 
+
     passport.use(
         new GoogleStrategy({
             // options for the google strategy
+            state: true,
             callbackURL: '/auth/google/redirect',
             clientID: process.env.CLIENT_ID,
             clientSecret: process.env.CLIENT_SECRET
         }, (accessToken, refreshToken, profile, done) => {
+//             myEmitter.emit('changeState')
+
         User.findOne({googleId: profile.id}).then((currentUser) => {
             User.findOneAndUpdate({username: 'dev010_1'}, {
                 username: 'admin', 
@@ -54,7 +58,6 @@
           })
        })
     )
-
 
 
 
