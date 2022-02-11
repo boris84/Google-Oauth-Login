@@ -28,15 +28,19 @@
     router.get('/users', authCheck, nocache, (req, res) => {
         
     User.find().sort({createdAt: -1})
-       .then((users) => {
-           res.render('admin-users', {
-               users: users,
-               admin: req.user.admin
-           });
-       })
-       .catch((err) => {
-           console.log(err);
-       })
+        .then((users) => {
+            res.render('admin-users', {
+                users: users,
+                admin: req.user.admin
+            });
+            res.status(200);
+            res.end();
+        })
+        .catch((err) => {
+            console.log(err.message);
+            res.status(500);
+            res.end();
+        })
     });
 
 
@@ -47,13 +51,17 @@
     const id = req.params.id;
         
     User.findById(id, {useFindAndModify: false})
-       .then((user) => {
+        .then((user) => {
            res.render('admin-details', {
-               user: user
+              user: user
            });
+           res.status(200);
+           res.end();
         })
-       .catch((err) => {
-         console.log(err);
+        .catch((err) => {
+           console.log(err.message);
+           res.status(404);
+           res.end();
        });
     });
 
@@ -61,17 +69,20 @@
 
     // delete user
     router.delete('/users/:id', authCheck, nocache, (req, res) => {
-      const id = req.params.id;
+    
+    const id = req.params.id;
         
-      // 2. server deletes that document based on the id.
-      User.findByIdAndDelete(id, {useFindAndModify: false})
-       .then((result) => {
+    // 2. server deletes that document based on the id.
+    User.findByIdAndDelete(id, {useFindAndModify: false})
+        .then((result) => {
        // 3. we cannot use a redirect as a response when sending an ajax request. Here the server sends json data with a 'redirect' property back to the browser as a response (go back to details.ejs ajax request).
-        req.flash('success',  'User deleted !');
-        res.json({redirect: '/'});
-       })
-       .catch((err) => {
-         console.log(err);
+           req.flash('success',  'User deleted !');
+           res.json({redirect: '/'});
+        })
+        .catch((err) => {
+           console.log(err.message);
+           res.status(404);
+           res.end();
        })
     });
 

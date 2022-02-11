@@ -27,8 +27,7 @@
             clientID: process.env.CLIENT_ID,
             clientSecret: process.env.CLIENT_SECRET
         }, (accessToken, refreshToken, profile, done) => {
-//             myEmitter.emit('changeState')
-
+            // myEmitter.emit('changeState')
         User.findOne({googleId: profile.id}).then((currentUser) => {
             User.findOneAndUpdate({username: 'dev010_1'}, {
                 username: 'admin', 

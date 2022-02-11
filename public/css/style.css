@@ -85,38 +85,51 @@
   margin-bottom: 5px;
 }
 
-.main-content.comment .form {
+/* form */
+.main-content.comment .form-inner {
     position: relative;
-    padding-bottom: 17px;
+    margin-bottom: 17px;
 }
 
-.main-content.comment .form i.fa-check-circle {
+.main-content.comment .form-inner {
+    position: relative;
+}
+
+.main-content.comment .form-inner textarea {
+    font-family: 'Courier New', sans-serif;
+    margin-bottom: 1.9rem;
+}
+
+.main-content.comment .form-inner [data-image] .icon {
     visibility: hidden;
+    width: 18px;
+    border: none;
+    margin: 0;
     position: absolute;
-    color: #00f300;
-    top: 8px;
+    top: 9px;
     right: 8px;
 }
 
-.main-content.comment .form i.fa-exclamation-circle {
-    visibility: hidden;
+.invalid-feedback, .valid-feedback {
     position: absolute;
-    color: #f41414;
-    top: 8px;
-    right: 5px;
+    top: 93px;
 }
 
-.main-content.comment .form small {
-    position: absolute;
-    color: #f41414;
-    visibility: hidden;
+/*
+.form-control.is-invalid, .was-validated .form-control {
+    background-image: none !important;
+}
+*/
+
+.form-control.is-invalid, .was-validated .form-control:invalid + [data-image] .icon {
+    visibility: visible;
 }
 
-.main-content.comment .form-row textarea {
-    padding: 5px 5px;
-    font-family: 'Consolas', sans-serif;
+/*
+.main-content.comment .form-inner textarea.form-control:valid {
+    background-image: url(/images/check.png) !important;
 }
-
+*/
 
 /* main-footer home, main-footer login & main-footer profile main-title.comment*/
 .main-footer.home,

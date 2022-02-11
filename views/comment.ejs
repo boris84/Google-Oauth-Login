@@ -12,7 +12,7 @@
     <!-- font awesome -->
     <script src="https://kit.fontawesome.com/1f7012dcb5.js" crossorigin="anonymous" defer></script>
     <!-- external script -->
-    <script src="/js/clientval.js" defer></script>
+    <script src="/js/formval.js" defer></script>
     <script src="/js/message.js" defer></script>
     <title>Admin Edit User</title>
   </head>
@@ -62,22 +62,30 @@
               <h3 class="text-dark text-center">Send a message</h3>
         </div>        
                   
+<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+
+                  
                   
         <!-- main content -->
         <div class="main-content comment">
-            <form id="form" method="POST" action="/profile/comment/<%= user.id %>">
+            <form id="form" method="POST" class="needs-validation" action="/profile/comment/<%= user.id %>" novalidate>
                 <div class="form-row">
                 <div class="col mx-auto">
                 <img src="<%= user.thumbnail %>"/>
                 <h6><%= user.username %></h6>
-                
-                <div class="form mb-2">
+
+                <div class="form-inner mb-2">
                         <!--  add form control property to fix one sided padding issue inside container for forms -->
                         <textarea id="textarea" name="comment" placeholder="Enter your message here." rows="4" 
-                        cols="37" class="form-control form-control-sm" aria-describedby="comment"></textarea>
-                        <i class="fas fa-check-circle"></i> 
-                        <i class="fas fa-exclamation-circle"></i>
-                        <small>error</small>
+                        cols="37" class="form-control form-control-sm" aria-describedby="comment" required></textarea>
+                        
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                        
+                        <div class="invalid-feedback">
+                             Please enter your message.
+                        </div>
                 </div>
                 
                 <button type="submit" class="btn btn-sm btn-primary">Submit</button>
@@ -85,7 +93,8 @@
                 </div>
             </form>     
         </div> 
-           
+          
+          
            
         <br> <!-- main footer -->
              <div class="main-footer comment">

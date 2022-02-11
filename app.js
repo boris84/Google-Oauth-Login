@@ -145,14 +145,17 @@
         res.render('home', { 
             user: req.user, 
         });
+        res.status(200);
+        res.end();
     });
 
 
 
     // 404 page
     app.use((req, res) => {
-        res.status(404);
         res.render('404');
+        res.status(404);
+        res.end();
     });
 
 

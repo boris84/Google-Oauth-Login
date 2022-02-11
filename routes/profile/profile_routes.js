@@ -10,6 +10,7 @@
         // if user is not logged in
         req.flash('danger',  'please login.');
         res.status(403).redirect('/auth/login');
+        res.end();
     } else {
         // if user is logged in
         next();
@@ -23,6 +24,8 @@
           user: req.user,
           admin: req.user.admin
        }); 
+        res.status(200);
+        res.end();
     });
 
 
@@ -33,6 +36,8 @@
        res.render('comment', {
           user: req.user
        }); 
+        res.status(200);
+        res.end();
     });
 
 
@@ -52,6 +57,8 @@
             user: user,
             errors: errors
         })
+        res.status(400);
+        res.end();
     } else {
         User.findOneAndUpdate({_id: id}, {
             comment: comment
@@ -61,11 +68,14 @@
             new: true,
        }) 
        .then((result) => {
-                req.flash('success',  'Message sent !');
-                res.status(200).redirect('/profile');
+            req.flash('success',  'Message sent !');
+            res.status(200).redirect('/profile');
+            res.end();
        })
        .catch((err) => {
-            console.log(err)
+            console.log(err.message);
+            res.status(500);
+            res.end();
         })
       }
     });

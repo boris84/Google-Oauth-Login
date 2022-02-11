@@ -2,8 +2,8 @@
     const passport = require('passport');
     
 
-
     // OAUTH WITH PASSPORT ROUTES
+
 
      // auth login 
      router.get('/login', nocache, (req, res) => {
@@ -35,13 +35,11 @@
 //   });
 
 
-
      // auth with Google
      router.get('/google', passport.authenticate('google', {
          prompt: "select_account", 
          scope: ['profile']
      }));
-
 
 
     // callback route for google to redirect to with code
@@ -50,6 +48,7 @@
         let state = req.url.slice(23, 47);
         let nonce = req.query.state;
         console.log(state, nonce)
+        
         if (state !== nonce) {
             req.flash('danger', 'not authorized.');
             res.status(403).redirect('/auth/login');
@@ -63,7 +62,6 @@
          res.status(200).redirect('/profile');
          res.end();
     });
-
 
 
     // set browser no-cache headers
