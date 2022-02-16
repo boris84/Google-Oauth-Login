@@ -31,6 +31,7 @@
 }
 
 
+
 /*main-title home, main-title login & main-title profile main-title.comment*/
 .main-title.login,
 .main-title.home, 
@@ -54,6 +55,7 @@
 }
 
 
+
 /* main-content home, main-content login */
 .main-content.login,
 .main-content.home{
@@ -66,6 +68,7 @@
   font-family: 'Verdana', sans-serif;
   font-size: 0.8rem;
 }
+
 
 
 /* main-content profile, main-content comment*/
@@ -85,29 +88,18 @@
   margin-bottom: 5px;
 }
 
+
+
 /* form */
 .main-content.comment .form-inner {
     position: relative;
     margin-bottom: 17px;
 }
 
-.main-content.comment .form-inner {
-    position: relative;
-}
-
 .main-content.comment .form-inner textarea {
     font-family: 'Courier New', sans-serif;
     margin-bottom: 1.9rem;
-}
-
-.main-content.comment .form-inner [data-image] .icon {
-    visibility: hidden;
-    width: 18px;
-    border: none;
-    margin: 0;
-    position: absolute;
-    top: 9px;
-    right: 8px;
+    resize: none;
 }
 
 .invalid-feedback, .valid-feedback {
@@ -115,21 +107,15 @@
     top: 93px;
 }
 
-/*
-.form-control.is-invalid, .was-validated .form-control {
-    background-image: none !important;
-}
-*/
-
-.form-control.is-invalid, .was-validated .form-control:invalid + [data-image] .icon {
-    visibility: visible;
+.was-validated .form-control:invalid {
+  background-image: url('../images/cross.png') !important;
 }
 
-/*
-.main-content.comment .form-inner textarea.form-control:valid {
-    background-image: url(/images/check.png) !important;
+.was-validated .form-control:valid {
+  background-image: url('../images/check.png') !important;
 }
-*/
+
+
 
 /* main-footer home, main-footer login & main-footer profile main-title.comment*/
 .main-footer.home,
@@ -149,11 +135,16 @@
 
 
 
+
+
+
+
+
+
 /* ADMIN */
 
 /* main-nav admin-users & main-nav admin-details & main-nav admin-edit-user*/
 .main-nav.admin {}
-
 
 .main-nav.admin nav ul {
   display: flex;
@@ -163,7 +154,6 @@
   flex-wrap: wrap;
 }
 
-
 .main-nav.admin nav li, a {
   list-style: none;
   cursor: pointer;
@@ -172,17 +162,18 @@
   font-family: 'Verdana', sans-serif;
 }
 
- 
+
+
 /* main-title admin-users & main-title admin-details & main-title admin-edit-user*/
 .main-title.admin {
   display: flex;
   justify-content: center;
 }
 
-
 .main-title.admin h3 {
   font-family: 'Kanit', sans-serif;
 }
+
 
 
 /* main-content admin-users & main-content admin-details & main-content admin-edit-user */
@@ -192,28 +183,25 @@
   font-family: 'Verdana', sans-serif;
 }
 
-
 .main-content.admin .table tr:hover {
   color: white;
   transition: 0.1s linear;
   background-color: dodgerblue;
 }
 
-
 .main-content .table th {
   font-size: 0.9rem;
 }
-
 
 .main-content.admin.details .table td {
   cursor: auto; 
 }
 
-
 .main-content.admin.details .table tr:hover {
   background: none;
   color: #000;
 }
+
 
 
 /* main-content admin-edit-user */
@@ -229,6 +217,7 @@
 }
 
 
+
 /* main-footer admin-users & main-footer admin-details & main-footer admin-edit-user */
 .main-footer.admin {
   display: flex;
@@ -241,6 +230,10 @@
 
 
 
+
+
+
+
 /* UNIVERSAL */
 
 /* messages & validation errors */
@@ -249,7 +242,6 @@
   position: static;
   font-family: 'kanit', 'sans-serif';
 }
-
 
 /* 404 */
 .not-found {
@@ -265,7 +257,6 @@
   font-family: 'Segoe UI', sans-serif;
   font-weight: bold;
 }
-
 
 #admin {
 /*    display: none;*/

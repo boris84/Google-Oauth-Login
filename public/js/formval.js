@@ -20,7 +20,6 @@ const exclamationCircle = document.querySelector('.fa-exclamation-circle');
           event.preventDefault();
           event.stopPropagation();
         } 
-
         form.classList.add('was-validated');
       }, false)
     })
