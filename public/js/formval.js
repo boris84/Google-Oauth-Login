@@ -1,14 +1,15 @@
 // COMMENT CLIENT-SIDE VALIDATION
 const form = document.getElementById('form');
-const textarea = document.getElementById('textarea');
+const textArea = document.getElementById('textarea');
 const checkCircle = document.querySelector('.fa-check-circle');
 const exclamationCircle = document.querySelector('.fa-exclamation-circle');
-
+let dirty = document.querySelector('.dirty');
+let clean = document.querySelector('.clean');
 
 // Example starter JavaScript for disabling form submissions if there are invalid fields
 (function () {
   'use strict'
-
+    
   // Fetch all the forms we want to apply custom Bootstrap validation styles to
   var forms = document.querySelectorAll('.needs-validation');
 
@@ -20,11 +21,34 @@ const exclamationCircle = document.querySelector('.fa-exclamation-circle');
           event.preventDefault();
           event.stopPropagation();
         } 
-        form.classList.add('was-validated');
+
+        let cleanInput = DOMPurify.sanitize(textArea.value, {USE_PROFILES: {html: true}});
+        textArea.value = cleanInput;
+          
+        form.classList.add('was-validated');        
       }, false)
     })
 })()
 
 
 
-                    
+
+
+                              
+
+        
+
+        
+        
+        
+      
+    
+
+
+
+
+
+
+
+
+

@@ -36,19 +36,19 @@
        res.render('comment', {
           user: req.user
        }); 
-        res.status(200);
-        res.end();
+        
+       res.status(200);
+       res.end();
     });
 
 
     // post comment
     router.post('/comment/:id', authCheck, nocache, (req, res) => {
-
       let id = req.params.id;
       let comment = req.body.comment;
       let user = req.user;
         
-      req.checkBody('comment', "Message body cannot be empty.").notEmpty();
+      req.checkBody('comment', "Please enter a valid message.").notEmpty();
 
       let errors = req.validationErrors();
         
