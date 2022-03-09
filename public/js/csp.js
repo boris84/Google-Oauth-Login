@@ -1,5 +1,3 @@
-// CONTENT-SECURITY-POLICY HEADER
-const csp = "default-src 'self' https:; script-src 'self' https://kit.fontawesome.com https://cdn.jsdelivr.net 'unsafe-inline'; style-src 'self' https://cdn.jsdelivr.net https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' data: https://fonts.googleapis.com https://lh3.googleusercontent.com; font-src 'self' https://ka-f.fontawesome.com https://fonts.gstatic.com; connect-src 'self' https://ka-f.fontawesome.com; media-src 'self'; object-src 'self'; frame-src 'self' ";
+const Csp = "default-src 'self' https:; script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' https://cdn.jsdelivr.net https://fonts.googleapis.com; img-src 'self' https://lh3.googleusercontent.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; media-src 'none'; object-src 'none'; prefetch-src 'none'; child-src 'none'; frame-src 'none'; worker-src 'none'; frame-ancestors 'none'; form-action 'self'; upgrade-insecure-requests; block-all-mixed-content; sandbox allow-forms allow-same-origin allow-scripts; base-uri 'self'; manifest-src 'none'"
 
-
-module.exports = csp;
+module.exports = Csp;

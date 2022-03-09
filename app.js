@@ -11,6 +11,8 @@
     const expressValidator = require('express-validator');
     const helmet = require('helmet');
     const User = require('./models/user');
+    const CspHeader = require('./public/js/csp');
+
     // sensitive info
     require('dotenv').config();
     // force https connection for http
@@ -45,7 +47,7 @@
 
 
 
-   const uri = process.env.MONGODB_URI
+   const uri = process.env.MONGODB_URI;
    
    // connect to mongodb atlas
     mongoose.connect(uri, { 
@@ -57,7 +59,6 @@
            console.log('connected to mongodb');
        })
     })
-               
 
 
     // set static folder
@@ -127,36 +128,47 @@
     app.use(passport.initialize());
     app.use(passport.session());
 
-   
+
 
     // set up routes
     const adminRoutes = require('./routes/admin/admin_routes');
     const authRoutes = require('./routes/auth/auth_routes');
     const profileRoutes = require('./routes/profile/profile_routes');
 
+
+
     app.use('/admin', adminRoutes);
     app.use('/auth', authRoutes);
     app.use('/profile', profileRoutes);
-    
+
 
 
     // GET home
     app.get('/', (req, res) => {
-        res.render('home', { 
-            user: req.user, 
+        
+    if (req.user) {
+        // Content-Security-Policy Header
+        res.setHeader("Content-Security-Policy", CspHeader);
+        return res.status(200).render('home', { 
+            user: req.user
+        }); 
+    } else {
+        res.status(200).render('home', {
+            user: req.user
         });
-        res.status(200);
         res.end();
+      }
     });
 
 
 
     // 404 page
     app.use((req, res) => {
-        res.render('404');
-        res.status(404);
+        res.status(404).render('404');
         res.end();
     });
+
+
 
 
 

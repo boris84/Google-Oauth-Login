@@ -238,6 +238,7 @@
 
 /* messages & validation errors */
 #messages, .errors {
+  height: 0;
   text-align: center;
   position: static;
   font-family: 'kanit', 'sans-serif';
@@ -245,11 +246,11 @@
 
 /* 404 */
 .not-found {
-  background-image: url(https://freefrontend.com/assets/img/html-css-404-page-templates/HTML-404-Page-with-SVG.gif);
+  background-image: url('../images/notfound.jpg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
-  height: 100vh;
+  height: 70vh;
 }
 
 /* buttons */

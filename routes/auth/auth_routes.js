@@ -1,6 +1,6 @@
     const router = require('express').Router();
     const passport = require('passport');
-    
+
 
     // OAUTH WITH PASSPORT ROUTES
 
@@ -8,7 +8,6 @@
      // auth login 
      router.get('/login', nocache, (req, res) => {
         res.render('login');
-        res.status(200);
         res.end();
      });
  
@@ -18,21 +17,11 @@
         // handle with passport
         req.logout();
         req.flash('success', 'You are logged out.');
+        res.redirect('/');
         req.session = null;
-        res.status(200).redirect('/');
         res.end();
+        
      });
-
-  
-//   router.post('/google', (req, res, next) => {
-//       console.log(req)
-//       let stateURL = req.body.url;
-//       let state = stateURL.slice(33);
-//       req.url += state;
-//       console.log(req.url       
-//       console.log(state)
-//       next() 
-//   });
 
 
      // auth with Google
@@ -51,17 +40,17 @@
         
         if (state !== nonce) {
             req.flash('danger', 'not authorized.');
-            res.status(403).redirect('/auth/login');
+            res.redirect('/auth/login');
             res.end();
         } else {
             next();
-        }  // passport takes back authorisation code in exchange for access token and when it comes back fires the passport callback function
-    } , passport.authenticate('google'), (req, res) => {
-        // after exhchanging authoristion code for access token, reverse the state to return a different value the next time a user logs in
-         req.flash('success',  'You are logged in.');
-         res.status(200).redirect('/profile');
-         res.end();
-    });
+        }// passport takes back authorisation code in exchange for access token and when it comes back fires the passport callback function
+     } , passport.authenticate('google'), (req, res) => {
+            // after exhchanging authoristion code for access token, reverse the state to return a different value the next time a user logs in
+            req.flash('success',  'You are logged in.');
+            res.redirect('/profile');
+            res.end();
+     });
 
 
     // set browser no-cache headers

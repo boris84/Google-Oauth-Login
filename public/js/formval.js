@@ -3,8 +3,11 @@ const form = document.getElementById('form');
 const textArea = document.getElementById('textarea');
 const checkCircle = document.querySelector('.fa-check-circle');
 const exclamationCircle = document.querySelector('.fa-exclamation-circle');
-let dirty = document.querySelector('.dirty');
-let clean = document.querySelector('.clean');
+
+
+function sanitizeInput(input) {
+    return DOMPurify.sanitize(input, {ALLOW_DATA_ATTR: false}, {USE_PROFILES: {html: true}}, {FORBID_TAGS: ['style']}, {FORBID_ATTR: ['style']});
+}
 
 // Example starter JavaScript for disabling form submissions if there are invalid fields
 (function () {
@@ -14,21 +17,19 @@ let clean = document.querySelector('.clean');
   var forms = document.querySelectorAll('.needs-validation');
 
   // Loop over them and prevent submission
-  Array.prototype.slice.call(forms)
-    .forEach(function (form) {
+  Array.prototype.slice.call(forms).forEach(function (form) {
       form.addEventListener('submit', function (event) {
-        if (!form.checkValidity()) { 
-          event.preventDefault();
-          event.stopPropagation();
-        } 
-
-        let cleanInput = DOMPurify.sanitize(textArea.value, {USE_PROFILES: {html: true}});
-        textArea.value = cleanInput;
-          
-        form.classList.add('was-validated');        
+          if (!form.checkValidity()) { 
+              event.preventDefault();
+              event.stopPropagation();
+          } 
+          textArea.value = sanitizeInput(textArea.value);
+          form.classList.add('was-validated');        
       }, false)
-    })
+  })
 })()
+
+
 
 
 

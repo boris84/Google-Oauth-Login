@@ -1,6 +1,11 @@
     const router = require('express').Router();
     const uuid = require('uuid');
     const User = require('../../models/user');
+    const CspHeader = require('../../public/js/csp');
+    const { check, validationResult } = require('express-validator/check');
+
+
+
 
 
     // securing profile view
@@ -8,8 +13,8 @@
 
     if(!req.user) {
         // if user is not logged in
-        req.flash('danger',  'please login.');
-        res.status(403).redirect('/auth/login');
+        req.flash('danger', 'Please login.');
+        res.redirect('/auth/login');
         res.end();
     } else {
         // if user is logged in
@@ -18,32 +23,45 @@
     }
 
     
+    
+    
     // profile page
     router.get('/', authCheck, nocache, (req, res) => {
-       res.render('profile', { 
+        
+       // Content-Security-Policy Header
+       res.setHeader("Content-Security-Policy", CspHeader);
+        
+       res.status(200).render('profile', { 
           user: req.user,
           admin: req.user.admin
        }); 
-        res.status(200);
         res.end();
     });
 
 
+
+
     // get comment
     router.get('/comment/:id', authCheck, nocache, (req, res) => {
-       const id = req.params.id;
         
-       res.render('comment', {
-          user: req.user
-       }); 
+      // Content-Security-Policy Header
+      res.setHeader("Content-Security-Policy", CspHeader);
         
-       res.status(200);
-       res.end();
+      const id = req.params.id;
+      res.status(200).render('comment', {
+           user: req.user
+      }); 
+      res.end();
     });
 
 
-    // post comment
-    router.post('/comment/:id', authCheck, nocache, (req, res) => {
+
+
+    // post update comment
+    router.post('/comment/:id', [check('comment').trim().escape()], authCheck, nocache, (req, res) => {
+      // Content-Security-Policy Header
+      res.setHeader("Content-Security-Policy", CspHeader);
+        
       let id = req.params.id;
       let comment = req.body.comment;
       let user = req.user;
@@ -52,14 +70,13 @@
 
       let errors = req.validationErrors();
         
-    if (errors) {
-        res.render('comment', {
-            user: user,
-            errors: errors
+      if (errors) {
+          res.status(400).render('comment', {
+             user: user,
+             errors: errors
         })
-        res.status(400);
         res.end();
-    } else {
+    } else {        
         User.findOneAndUpdate({_id: id}, {
             comment: comment
         },
@@ -67,13 +84,13 @@
             upsert: true,
             new: true,
        }) 
-       .then((result) => {
-            req.flash('success',  'Message sent !');
-            res.status(200).redirect('/profile');
+       .then(result => {
+            req.flash('success',  'Message sent!');
+            res.status(201).redirect('/profile');
             res.end();
        })
-       .catch((err) => {
-            console.log(err.message);
+       .catch(err => {
+            console.log(err);
             res.status(500);
             res.end();
         })
@@ -81,6 +98,7 @@
     });
     
     
+
 
     // set browser no-cache headers
     function nocache(req, res, next) {

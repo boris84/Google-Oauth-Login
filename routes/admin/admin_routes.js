@@ -1,6 +1,8 @@
     const express = require('express');
     const router = express.Router();
     const User = require('../../models/user');
+    const CspHeader = require('../../public/js/csp');
+    const { check, validationResult } = require('express-validator/check');
 
 
 
@@ -11,103 +13,126 @@
     const authCheck = (req, res, next) => {
         if (!req.user) {
             // if user is not logged in and tries to access admin area 
-            req.flash('danger', 'please log in !');
-            res.status(403).redirect('/auth/login');
+            req.flash('danger', 'Please login.');
+            res.status(400).redirect('/auth/login');
         } else if (!req.user.admin) {
              // if user is logged in and tries to access admin area
-             req.flash('danger', 'not authorized.');
-             res.status(403).redirect('/profile');
+             req.flash('danger', 'Not Authorized.');
+             res.status(401).redirect('/profile');
         } else {
              // if user is admin
-             next();
+            next();
         }
     }
 
 
+
     // get users 
     router.get('/users', authCheck, nocache, (req, res) => {
+    
+    // Content-Security-Policy Header
+    res.setHeader("Content-Security-Policy", CspHeader);
         
     User.find().sort({createdAt: -1})
-        .then((users) => {
-            res.render('admin-users', {
+        .then(users => {
+            res.status(200).render('admin-users', {
                 users: users,
                 admin: req.user.admin
             });
-            res.status(200);
             res.end();
         })
-        .catch((err) => {
-            console.log(err.message);
+        .catch(err => {
             res.status(500);
+            console.log(err);
             res.end();
         })
     });
+
 
 
 
     // get user 
     router.get('/users/:id', authCheck, nocache, (req, res) => {
+        
+    // Content-Security-Policy Header
+    res.setHeader("Content-Security-Policy", CspHeader);
 
     const id = req.params.id;
         
     User.findById(id, {useFindAndModify: false})
-        .then((user) => {
-           res.render('admin-details', {
+        .then(user => {
+           res.status(200).render('admin-details', {
               user: user
            });
-           res.status(200);
            res.end();
         })
-        .catch((err) => {
-           console.log(err.message);
-           res.status(404);
+        .catch(err => {
+           res.status(500);
+           console.log(err);
            res.end();
        });
     });
+
 
 
 
     // delete user
     router.delete('/users/:id', authCheck, nocache, (req, res) => {
+        
+    // Content-Security-Policy Header
+    res.setHeader("Content-Security-Policy", CspHeader);
     
     const id = req.params.id;
         
     // 2. server deletes that document based on the id.
     User.findByIdAndDelete(id, {useFindAndModify: false})
-        .then((result) => {
+        .then(result => {
        // 3. we cannot use a redirect as a response when sending an ajax request. Here the server sends json data with a 'redirect' property back to the browser as a response (go back to details.ejs ajax request).
-           req.flash('success',  'User deleted !');
-           res.json({redirect: '/'});
+           req.flash('success', 'User deleted!');
+           res.json({redirect: '/admin/users'});
+           res.end();
         })
-        .catch((err) => {
-           console.log(err.message);
-           res.status(404);
+        .catch(err => {
+           res.status(500);
+           console.log(err);
            res.end();
        })
     });
 
 
 
+
     // get edit
     router.get('/users/admin-edit-user/:id', authCheck, nocache, (req, res) => {
+        
+    // Content-Security-Policy Header
+    res.setHeader("Content-Security-Policy", CspHeader);
 
     const id = req.params.id;  
 
       User.findById(id, {useFindAndModify: false})
-       .then((result) => {
-         res.render('admin-edit-user', {
-           user: result
-         });
+       .then(result => {
+           res.status(200).render('admin-edit-user', {
+              user: result
+           });
+          res.end();
        })
-       .catch((err) => {
-         console.log(err);
+       .catch(err => {
+          res.status(500);
+          console.log(err);
+          res.end();
        });
     });
 
 
 
+
     // post edit
-    router.post('/users/admin-edit-user/:id', authCheck, nocache, (req, res) => {    
+    router.post('/users/admin-edit-user/:id', [check('username').trim().escape()], authCheck, nocache, (req, res) => {    
+        
+    // Content-Security-Policy Header
+    res.setHeader("Content-Security-Policy", CspHeader);
+        
       let id = req.params.id;
       let username = req.body.username;
       let googleId = req.body.googleId;
@@ -119,11 +144,12 @@
 
       if (errors) {
          User.findById(id, {useFindAndModify: false})
-            .then((user) => {
-                res.render('admin-edit-user', {
+            .then(user => {
+                res.status(400).render('admin-edit-user', {
                     user: user,
                     errors: errors
                 });
+                res.end();
             })
 
        } else {
@@ -135,12 +161,14 @@
                 upsert: true,
                 new: true,
              }) 
-              .then((result) => {
-                 req.flash('success',  'User updated !');
-                 res.status(200).redirect('/admin/users');
+              .then(result => {
+                 req.flash('success',  'User updated!');
+                 res.status(201).redirect('/admin/users');
              })
-              .catch((err) => {
-                 console.log(err)
+              .catch(err => {
+                 res.status(500);
+                 console.log(err);
+                 res.end();
              })
           }
     });
