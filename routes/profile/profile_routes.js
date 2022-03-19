@@ -2,8 +2,7 @@
     const uuid = require('uuid');
     const User = require('../../models/user');
     const CspHeader = require('../../public/js/csp');
-    const { check, validationResult } = require('express-validator/check');
-
+    const { body, validationResult } = require('express-validator/check');
 
 
 
@@ -56,46 +55,54 @@
 
 
 
-
     // post update comment
-    router.post('/comment/:id', [check('comment').trim().escape()], authCheck, nocache, (req, res) => {
+    router.post('/comment/:id', 
+    [ 
+       body('comment', 'Invalid input. Ilegal characters present.').not().isEmpty(),
+       body('comment', 'Letters Only.').matches(/^[\.a-zA-Z,!? ]*$/).escape().trim()
+    ], authCheck, nocache, 
+    
+    (req, res) => {
+        
       // Content-Security-Policy Header
       res.setHeader("Content-Security-Policy", CspHeader);
         
-      let id = req.params.id;
-      let comment = req.body.comment;
-      let user = req.user;
+      const user = req.user;
+      const errors = validationResult(req);
         
-      req.checkBody('comment', "Please enter a valid message.").notEmpty();
+      if (!errors.isEmpty()) {
+            req.getValidationResult().then(result => {
+                res.status(400).render('comment', { 
+                    user: user,
+                    errors: errors.array({ onlyFirstError: true }) 
+                });
+                res.end(); 
+            }).catch((err) => {
+                  console.log(err.message);
+            })
+      } else {   
+            const id = req.params.id;
+            const comment = req.body.comment;
 
-      let errors = req.validationErrors();
-        
-      if (errors) {
-          res.status(400).render('comment', {
-             user: user,
-             errors: errors
-        })
-        res.end();
-    } else {        
-        User.findOneAndUpdate({_id: id}, {
-            comment: comment
-        },
-        {
-            upsert: true,
-            new: true,
-       }) 
-       .then(result => {
-            req.flash('success',  'Message sent!');
-            res.status(201).redirect('/profile');
-            res.end();
-       })
-       .catch(err => {
-            console.log(err);
-            res.status(500);
-            res.end();
-        })
-      }
-    });
+            User.findOneAndUpdate({_id: id}, {
+                comment: comment
+            },
+            {
+                upsert: true,
+                new: true,
+           }) 
+           .then(result => {
+                req.flash('success',  'Message sent!');
+                res.status(201).redirect('/profile');
+                res.end();
+           })
+           .catch(err => {
+                console.log(err.message);
+                res.status(500);
+                res.end();
+            })
+        }
+  });
     
     
 

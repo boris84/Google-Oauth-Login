@@ -22,16 +22,6 @@
   justify-content: flex-end;
 }
 
-.main-nav.home nav li, a,
-.main-nav.login nav li, a,
-.main-nav.profile nav li, a, 
-.main-nav.comment nav li, a {
-  list-style: none;
-  cursor: pointer; 
-}
-
-
-
 /*main-title home, main-title login & main-title profile main-title.comment*/
 .main-title.login,
 .main-title.home, 
@@ -256,10 +246,12 @@
 /* buttons */
 .main-nav li, a.btn, button.btn {
   font-family: 'Segoe UI', sans-serif;
+  list-style: none;
+  cursor: pointer;
   font-weight: bold;
 }
 
 #admin {
-/*    display: none;*/
+/* display: none;*/
 }
 

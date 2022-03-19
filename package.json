@@ -27,8 +27,7 @@
     "passport": "^0.4.1",
     "passport-google-oauth20": "^2.0.0",
     "passport-http": "*",
-    "uuid": "^8.3.2",
-    "validator": "^13.7.0"
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.13"

@@ -2,7 +2,8 @@
     const router = express.Router();
     const User = require('../../models/user');
     const CspHeader = require('../../public/js/csp');
-    const { check, validationResult } = require('express-validator/check');
+    const { body, validationResult } = require('express-validator/check');
+
 
 
 
@@ -128,47 +129,52 @@
 
 
     // post edit
-    router.post('/users/admin-edit-user/:id', [check('username').trim().escape()], authCheck, nocache, (req, res) => {    
+    router.post('/users/admin-edit-user/:id', 
+    [
+       body('username', 'This field must have a value.').not().isEmpty(),
+       body('username', 'Letters Only.').matches(/^[\.a-zA-Z,!? ]*$/).escape().trim()
+    ], authCheck, nocache, 
         
-    // Content-Security-Policy Header
-    res.setHeader("Content-Security-Policy", CspHeader);
+    (req, res) => {    
         
-      let id = req.params.id;
-      let username = req.body.username;
-      let googleId = req.body.googleId;
+      // Content-Security-Policy Header
+      res.setHeader("Content-Security-Policy", CspHeader);
 
-      req.checkBody('username', 'This field must have a value !').notEmpty();
-      req.checkBody('googleId', 'This field must have a value !').notEmpty();
+      const id = req.params.id;
+      const username = req.body.username;
+      const googleId = req.body.googleId;
+      const errors = validationResult(req);
 
-      let errors = req.validationErrors();
-
-      if (errors) {
-         User.findById(id, {useFindAndModify: false})
-            .then(user => {
-                res.status(400).render('admin-edit-user', {
-                    user: user,
-                    errors: errors
-                });
-                res.end();
-            })
-
+      if (!errors.isEmpty()) {
+          req.getValidationResult().then(result => {
+              User.findById(id, {useFindAndModify: false})
+              .then(user => {
+                  res.status(400).render('admin-edit-user', {
+                      user: user,
+                      errors: errors.array({ onlyFirstError: true }) 
+                  });
+                  res.end();
+              }).catch((err) => {
+                     console.log(err.message);
+              })
+          })
        } else {
-            User.findOneAndUpdate({_id: id}, {
-               username: username,
-               googleId: googleId,
+             User.findOneAndUpdate({_id: id}, {
+                username: username,
+                googleId: googleId,
              }, 
              {
                 upsert: true,
                 new: true,
              }) 
-              .then(result => {
-                 req.flash('success',  'User updated!');
-                 res.status(201).redirect('/admin/users');
+             .then(result => {
+                req.flash('success',  'User updated!');
+                res.status(201).redirect('/admin/users');
              })
-              .catch(err => {
-                 res.status(500);
-                 console.log(err);
-                 res.end();
+             .catch(err => {
+                res.status(500);
+                console.log(err);
+                res.end();
              })
           }
     });
