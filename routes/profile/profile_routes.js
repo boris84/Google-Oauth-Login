@@ -58,8 +58,8 @@
     // post update comment
     router.post('/comment/:id', 
     [ 
-       body('comment', 'Invalid input. Ilegal characters present.').not().isEmpty(),
-       body('comment', 'Letters Only.').matches(/^[\.a-zA-Z,!? ]*$/).escape().trim()
+       body('comment', 'Letters ONLY please.').not().isEmpty(),
+       body('comment', 'Letters ONLY please.').matches(/^[\.a-zA-Z,!? ]*$/).escape().trim()
     ], authCheck, nocache, 
     
     (req, res) => {
