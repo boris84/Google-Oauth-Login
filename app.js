@@ -75,6 +75,8 @@
 
     // cookie-session middleware
     app.use(cookieSession({
+        sameSite: 'Lax',
+//        secure: true,
     /* secure: true, - browser will only set cookie if connection is secure *SECURITY*
         sameSite: 'Strict', - browser will only send cookie if the request is from the samesite *SECURITY*
         httpOnly: true, - cookie will not be accessible from javascript and will only transferred via http protocol *SECURITY*
