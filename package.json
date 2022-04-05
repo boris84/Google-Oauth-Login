@@ -21,7 +21,7 @@
     "express-sslify": "^1.2.0",
     "express-validator": "^6.5.0",
     "helmet": "^4.6.0",
-    "moment": "^2.29.1",
+    "moment": "^2.29.2",
     "mongoose": "^6.0.8",
     "openssl": "^2.0.0",
     "passport": "^0.4.1",
