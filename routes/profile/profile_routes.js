@@ -2,7 +2,7 @@
     const uuid = require('uuid');
     const User = require('../../models/user');
     const CspHeader = require('../../public/js/csp');
-    const { body, validationResult } = require('express-validator/check');
+    const { body, validationResult } = require('express-validator');
 
 
 
@@ -71,15 +71,11 @@
       const errors = validationResult(req);
         
       if (!errors.isEmpty()) {
-            req.getValidationResult().then(result => {
-                res.status(400).render('comment', { 
-                    user: user,
-                    errors: errors.array({ onlyFirstError: true }) 
-                });
-                res.end(); 
-            }).catch((err) => {
-                  console.log(err.message);
-            })
+         res.status(400).render('comment', { 
+             user: user,
+             errors: errors.array({ onlyFirstError: true }) 
+         });
+        res.end(); 
       } else {   
             const id = req.params.id;
             const comment = req.body.comment;

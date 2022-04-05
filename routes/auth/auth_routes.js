@@ -1,12 +1,21 @@
-    const router = require('express').Router();
-    const passport = require('passport');
+      const router = require('express').Router();
+      const passport = require('passport');
+      const rateLimit = require('express-rate-limit');
 
 
-    // OAUTH WITH PASSPORT ROUTES
+      // OAUTH WITH PASSPORT ROUTES
+
+
+      // rate limiter
+      const limiter = rateLimit({
+          max : 5,
+          windowMs: 24 * 60 * 60 * 1000,
+          headers: true
+      })
 
 
      // auth login 
-     router.get('/login', nocache, (req, res) => {
+     router.get('/login', limiter, nocache, (req, res) => {
         res.render('login');
         res.end();
      });
@@ -25,7 +34,7 @@
 
 
      // auth with Google
-     router.get('/google', passport.authenticate('google', {
+     router.get('/google', limiter, passport.authenticate('google', {
          prompt: "select_account", 
          scope: ['profile']
      }));
@@ -36,7 +45,6 @@
      // Tricking the user into using the attrackers authorisation code (instead of users) by clicking some link, so that access token recieved by client is not assigned to the user's resources but attackers. There is a possibily that the response from this apps initial request is not from google, so before we exchange the code for the token we check for a state parameter value and compare it with the state parameter value that our client request initiated originally to prevent CSRF attacks
         let state = req.url.slice(23, 47);
         let nonce = req.query.state;
-        console.log(state, nonce)
         
         if (state !== nonce) {
             req.flash('danger', 'not authorized.');
@@ -45,7 +53,7 @@
         } else {
             next();
         }// passport takes back authorisation code in exchange for access token and when it comes back fires the passport callback function
-     } , passport.authenticate('google'), (req, res) => {
+     } , passport.authenticate('google'), limiter, (req, res) => {
             // after exhchanging authoristion code for access token, reverse the state to return a different value the next time a user logs in
             req.flash('success',  'You are logged in.');
             res.redirect('/profile');

@@ -8,7 +8,7 @@
     const flash = require('connect-flash');
     // controls our user's session - takes cookie/encrypts it/sends it to browser
     const cookieSession = require('cookie-session');
-    const expressValidator = require('express-validator');
+    // const expressValidator = require('express-validator');
     const helmet = require('helmet');
     const User = require('./models/user');
     const CspHeader = require('./public/js/csp');
@@ -87,23 +87,23 @@
 
 
 
-    // express validator middleware
-    app.use(expressValidator({
-        errorFormatter: function(param, msg, value) {
-            var namespace = param.split('.'),
-            root = namespace.shift(),
-            formParam = root;
-
-            while(namespace.length) {
-                formParam += '[' + namespace.shift() + ']';
-            }
-            return {
-                param: formParam,
-                msg: msg,
-                value: value
-            };  
-        }
-    }));
+//     express validator middleware
+//     app.use(expressValidator({
+//         errorFormatter: function(param, msg, value) {
+//             var namespace = param.split('.'),
+//             root = namespace.shift(),
+//             formParam = root;
+//
+//             while(namespace.length) {
+//                 formParam += '[' + namespace.shift() + ']';
+//             }
+//             return {
+//                 param: formParam,
+//                 msg: msg,
+//                 value: value
+//             };  
+//         }
+//     }));
 
 
 

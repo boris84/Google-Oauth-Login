@@ -2,7 +2,7 @@
     const router = express.Router();
     const User = require('../../models/user');
     const CspHeader = require('../../public/js/csp');
-    const { body, validationResult } = require('express-validator/check');
+    const { body, validationResult } = require('express-validator');
 
 
 
@@ -146,7 +146,6 @@
       const errors = validationResult(req);
 
       if (!errors.isEmpty()) {
-          req.getValidationResult().then(result => {
               User.findById(id, {useFindAndModify: false})
               .then(user => {
                   res.status(400).render('admin-edit-user', {
@@ -157,7 +156,6 @@
               }).catch((err) => {
                      console.log(err.message);
               })
-          })
        } else {
              User.findOneAndUpdate({_id: id}, {
                 username: username,
