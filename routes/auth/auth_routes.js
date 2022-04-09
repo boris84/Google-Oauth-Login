@@ -4,13 +4,12 @@
 
 
       // OAUTH WITH PASSPORT ROUTES
-
-
+      
       // rate limiter
       const limiter = rateLimit({
-          max : 5,
-          windowMs: 24 * 60 * 60 * 1000,
-          headers: true
+         max : 8,
+         windowMs: 24 * 60 * 60 * 1000,
+         headers: true,
       })
 
 
@@ -53,7 +52,7 @@
         } else {
             next();
         }// passport takes back authorisation code in exchange for access token and when it comes back fires the passport callback function
-     } , passport.authenticate('google'), limiter, (req, res) => {
+     } ,limiter, passport.authenticate('google'), (req, res) => {
             // after exhchanging authoristion code for access token, reverse the state to return a different value the next time a user logs in
             req.flash('success',  'You are logged in.');
             res.redirect('/profile');

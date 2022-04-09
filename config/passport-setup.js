@@ -39,7 +39,6 @@
                     throw err;
                 }
             })
-            
             if (currentUser) {
                // if user exists in db we call done and we move on the the serializeUser function
               done(null, currentUser);
