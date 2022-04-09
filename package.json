@@ -24,7 +24,7 @@
     "moment": "^2.29.1",
     "mongoose": "^6.0.8",
     "openssl": "^2.0.0",
-    "passport": "^0.4.1",
+    "passport": "^0.5.2",
     "passport-google-oauth20": "^2.0.0",
     "passport-http": "*",
     "uuid": "^8.3.2"
