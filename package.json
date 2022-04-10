@@ -20,7 +20,7 @@
     "express-messages": "*",
     "express-rate-limit": "^6.3.0",
     "express-sslify": "^1.2.0",
-    "express-validator": "^6.5.0",
+    "express-validator": "^6.14.0",
     "helmet": "^4.6.0",
     "moment": "^2.29.2",
     "mongoose": "^6.0.8",
