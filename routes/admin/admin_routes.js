@@ -29,7 +29,7 @@
 
 
     // get users 
-    router.get('/users', authCheck, nocache, (req, res) => {
+    router.get('/users', authCheck, nocache, (req, res, next) => {
     
     // Content-Security-Policy Header
     res.setHeader("Content-Security-Policy", CspHeader);
@@ -42,18 +42,14 @@
             });
             res.end();
         })
-        .catch(err => {
-            res.status(500);
-            console.log(err);
-            res.end();
-        })
+        .catch(next);
     });
 
 
 
 
     // get user 
-    router.get('/users/:id', authCheck, nocache, (req, res) => {
+    router.get('/users/:id', authCheck, nocache, (req, res, next) => {
         
     // Content-Security-Policy Header
     res.setHeader("Content-Security-Policy", CspHeader);
@@ -67,18 +63,14 @@
            });
            res.end();
         })
-        .catch(err => {
-           res.status(500);
-           console.log(err);
-           res.end();
-       });
+        .catch(next);
     });
 
 
 
 
     // delete user
-    router.delete('/users/:id', authCheck, nocache, (req, res) => {
+    router.delete('/users/:id', authCheck, nocache, (req, res, next) => {
         
     // Content-Security-Policy Header
     res.setHeader("Content-Security-Policy", CspHeader);
@@ -93,18 +85,14 @@
            res.json({redirect: '/admin/users'});
            res.end();
         })
-        .catch(err => {
-           res.status(500);
-           console.log(err);
-           res.end();
-       })
+        .catch(next)
     });
 
 
 
 
     // get edit
-    router.get('/users/admin-edit-user/:id', authCheck, nocache, (req, res) => {
+    router.get('/users/admin-edit-user/:id', authCheck, nocache, (req, res, next) => {
         
     // Content-Security-Policy Header
     res.setHeader("Content-Security-Policy", CspHeader);
@@ -112,17 +100,13 @@
     const id = req.params.id;  
 
       User.findById(id, {useFindAndModify: false})
-       .then(result => {
+       .then(user => {
            res.status(200).render('admin-edit-user', {
-              user: result
+              user: user
            });
           res.end();
        })
-       .catch(err => {
-          res.status(500);
-          console.log(err);
-          res.end();
-       });
+       .catch(next);
     });
 
 
@@ -135,7 +119,7 @@
        body('username', 'Letters Only.').matches(/^[\.a-zA-Z,!? ]*$/).escape().trim()
     ], authCheck, nocache, 
         
-    (req, res) => {    
+    (req, res, next) => {    
         
       // Content-Security-Policy Header
       res.setHeader("Content-Security-Policy", CspHeader);
@@ -165,15 +149,11 @@
                 upsert: true,
                 new: true,
              }) 
-             .then(result => {
+             .then(() => {
                 req.flash('success',  'User updated!');
                 res.status(201).redirect('/admin/users');
              })
-             .catch(err => {
-                res.status(500);
-                console.log(err);
-                res.end();
-             })
+             .catch(next);
           }
     });
     

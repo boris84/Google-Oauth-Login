@@ -53,7 +53,9 @@
                       done(null, newUser);
                  })
               }
-          })
+          }).catch((errors) => {
+                console.log(errors);
+           });
        })
     )
 

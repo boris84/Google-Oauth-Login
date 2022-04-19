@@ -1,8 +1,6 @@
 // COMMENT CLIENT-SIDE VALIDATION
 const form = document.getElementById('form');
 const textArea = document.getElementById('textarea');
-const checkCircle = document.querySelector('.fa-check-circle');
-const exclamationCircle = document.querySelector('.fa-exclamation-circle');
 
 
 function sanitizeInput(input) {

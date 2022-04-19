@@ -1,9 +1,7 @@
     const router = require('express').Router();
-    const uuid = require('uuid');
     const User = require('../../models/user');
     const CspHeader = require('../../public/js/csp');
     const { body, validationResult } = require('express-validator');
-
 
 
 
@@ -26,13 +24,14 @@
     
     // profile page
     router.get('/', authCheck, nocache, (req, res) => {
-        
+       const date = req.user.createdAt;
+
        // Content-Security-Policy Header
        res.setHeader("Content-Security-Policy", CspHeader);
-        
        res.status(200).render('profile', { 
           user: req.user,
-          admin: req.user.admin
+          admin: req.user.admin,
+          date: date
        }); 
         res.end();
     });
@@ -42,16 +41,15 @@
 
     // get comment
     router.get('/comment/:id', authCheck, nocache, (req, res) => {
-        
       // Content-Security-Policy Header
       res.setHeader("Content-Security-Policy", CspHeader);
-        
       const id = req.params.id;
       res.status(200).render('comment', {
            user: req.user
       }); 
       res.end();
     });
+
 
 
 
@@ -62,7 +60,7 @@
        body('comment', 'Letters ONLY please.').matches(/^[\.a-zA-Z,!? ]*$/).escape().trim()
     ], authCheck, nocache, 
     
-    (req, res) => {
+    (req, res, next) => {
         
       // Content-Security-Policy Header
       res.setHeader("Content-Security-Policy", CspHeader);
@@ -87,16 +85,12 @@
                 upsert: true,
                 new: true,
            }) 
-           .then(result => {
+           .then(user => {
                 req.flash('success',  'Message sent!');
                 res.status(201).redirect('/profile');
                 res.end();
            })
-           .catch(err => {
-                console.log(err.message);
-                res.status(500);
-                res.end();
-            })
+           .catch(next);
         }
   });
     
