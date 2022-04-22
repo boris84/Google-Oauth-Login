@@ -55,7 +55,7 @@
         <div class="main-title profile">
             <header>
                <% if (admin) { %>
-                   <h2>Hi <%= user.username %>,</h2>
+                    <h2>Hi <%= user.username %>,</h2>
                <% } else { %>
                    <h2>Welcome to your profile,</h2>
                <% } %>
@@ -66,7 +66,8 @@
         <!-- main content -->
         <div class="main-content profile">
             <img src="<%= user.thumbnail %>"alt="profile picture"/>
-            <p><%= user.username %></p>
+            <p><span>USERNAME: </span><%= user.username %></p>
+            <p><span>EMAIL: </span><%= user.email %></p>
         </div>
 
       

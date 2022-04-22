@@ -7,7 +7,7 @@
 
 
 
-    // ADMIN USERS ROUTES
+    // ADMIN ROUTES
 
 
     // secure admin views
@@ -47,7 +47,6 @@
 
 
 
-
     // get user 
     router.get('/users/:id', authCheck, nocache, (req, res, next) => {
         
@@ -65,7 +64,6 @@
         })
         .catch(next);
     });
-
 
 
 
@@ -90,7 +88,6 @@
 
 
 
-
     // get edit
     router.get('/users/admin-edit-user/:id', authCheck, nocache, (req, res, next) => {
         
@@ -108,7 +105,6 @@
        })
        .catch(next);
     });
-
 
 
 

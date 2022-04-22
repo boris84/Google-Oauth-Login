@@ -3,14 +3,17 @@
       const rateLimit = require('express-rate-limit');
 
 
-      // OAUTH WITH PASSPORT ROUTES
+
+      // AUTH WITH PASSPORT ROUTES
       
+
       // rate limiter
 //      const limiter = rateLimit({
 //         max : 8,
 //         windowMs: 24 * 60 * 60 * 1000,
 //         headers: true,
 //      })
+
 
 
      // auth login 
@@ -20,23 +23,24 @@
      });
  
 
+
      // auth logout 
      router.get('/logout', (req, res) => {
         // handle with passport
         req.logout();
         req.flash('success', 'You are logged out.');
         res.redirect('/');
-        req.session = null;
         res.end();
-        
      });
+
 
 
      // auth with Google
      router.get('/google', passport.authenticate('google', {
-         prompt: "select_account", 
-         scope: ['profile']
+        prompt: "consent",
+        scope: ['profile', 'email']
      }));
+
 
 
     // callback route for google to redirect to with code
@@ -58,6 +62,7 @@
             res.redirect('/profile');
             res.end();
      });
+
 
 
     // set browser no-cache headers

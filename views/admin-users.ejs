@@ -57,25 +57,23 @@
       <!-- main content -->
       <div class="main-content admin"> 
           <% if (users.length > 0) { %>
-              <table class="table table table-bordered">                        
-                  <tr>           
-                      <th class="text-white text-center bg-dark">Username</th>
-                      <th class="text-white text-center bg-dark">Message</th>
-                  </tr>
              <% users.forEach(user => { %>
                   <% if (user.admin) { %>
                         <!-- display nothing -->
                   <% } else { %>
-                      <tr data-href="/admin/users/<%= user._id %>">
-                      <td class="col-sm-3 border text-center border-dark"><%= user.username %></td>
-                      <td class="col-sm-3 border text-center border-dark"><%= user.comment %></td>
-                      </tr> 
+                        <table class="table table table-bordered">                        
+                            <tr>           
+                                <th class="text-white text-center bg-dark">Username</th>
+                                <th class="text-white text-center bg-dark">Message</th>
+                            </tr>
+                                <tr data-href="/admin/users/<%= user._id %>">
+                                <td class="col-sm-3 border text-center border-dark"><%= user.username %></td>
+                                <td class="col-sm-3 border text-center border-dark"><%= user.comment %></td>
+                            </tr> 
+                        </table>
                   <% } %>
-              <% }); %>
-          <% } else { %>    
-                      <p class="text-center">Oops there's nothing here right now..  try back later!</p>
-             <% } %>
-            </table> 
+              <% }) %>
+          <% } %>
       </div>
           
           

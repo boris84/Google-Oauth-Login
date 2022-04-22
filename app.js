@@ -19,8 +19,11 @@
     // const enforce = require('express-sslify');
     
 
+
     // initialize express app
     const app = express();
+    // disable the `server` response header field for security to prevent hackers from knowing what server the application is using
+    app.disable('x-powered-by'); 
 
 
 
@@ -30,12 +33,13 @@
 
 
     // This sets custom options for the `referrerPolicy` middleware.
-//    app.use(
-//        helmet.csp({directives: {
-//            defaultSrc: [" 'self' https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js "]
-//        }})
-//    );
+    //  app.use(
+    //  helmet.csp({directives: {
+    //  defaultSrc: [" 'self' https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js "]
+    //  }})
+    //  );
  
+
 
    // when we deploy our application, the server most likely isn't going to run it on 5000, it's going to have the port number in an enviroment variable so we want to check that first, if  that's not available then we want to run it on port 5000. 
     const PORT = process.env.PORT || 5000;
@@ -61,6 +65,7 @@
     })
 
 
+
     // set static folder
     app.use(express.static(path.join(__dirname, 'public')));
 
@@ -76,7 +81,7 @@
     // cookie-session middleware
     app.use(cookieSession({
         sameSite: 'Lax',
-//        secure: true,
+     // secure: true,
     /* secure: true, - browser will only set cookie if connection is secure *SECURITY*
         sameSite: 'Strict', - browser will only send cookie if the request is from the samesite *SECURITY*
         httpOnly: true, - cookie will not be accessible from javascript and will only transferred via http protocol *SECURITY*
@@ -84,26 +89,6 @@
         maxAge: 24 * 60 * 60 * 1000,
         keys: [process.env.SESSION_COOKIE_KEY],
     }));
-
-
-
-//     express validator middleware
-//     app.use(expressValidator({
-//         errorFormatter: function(param, msg, value) {
-//             var namespace = param.split('.'),
-//             root = namespace.shift(),
-//             formParam = root;
-//
-//             while(namespace.length) {
-//                 formParam += '[' + namespace.shift() + ']';
-//             }
-//             return {
-//                 param: formParam,
-//                 msg: msg,
-//                 value: value
-//             };  
-//         }
-//     }));
 
 
 

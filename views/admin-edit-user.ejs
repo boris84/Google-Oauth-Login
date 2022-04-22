@@ -67,15 +67,10 @@
                   <div class="col mx-auto p-3">
                     <img src="<%= user.thumbnail %>"/>
 
-                    <div class="mb-2">
+                    <div class="mb-3">
                         <label for="username" class="form-label">Username</label>
                         <!--  add form control property to fix one sided padding issue inside container for forms -->
                         <input type="text" id="username" minlength="3" name="username" value="<%= user.username %>" class="form-control form-control-sm" aria-describedby="username">
-                    </div>
-                    <div class="mb-3">
-                        <label for="GoogleId" class="form-label">GoogleId</label>
-                        <!--  add form control property to fix one sided padding issue inside container for forms -->
-                        <input type="password" name="googleId" value="<%= user.googleId %>" class="form-control form-control-sm" aria-describedby="userId" readonly>
                     </div>
                         <button type="submit" class="btn btn-sm btn-primary">Submit</button>
                   </div>

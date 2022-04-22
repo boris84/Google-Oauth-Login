@@ -1,6 +1,8 @@
     const passport = require('passport');
     const GoogleStrategy = require('passport-google-oauth20');
     const User = require('../models/user');
+    const axios = require('axios').default;
+
     require('dotenv').config();
 
 
@@ -27,37 +29,60 @@
             clientID: process.env.CLIENT_ID,
             clientSecret: process.env.CLIENT_SECRET
         }, (accessToken, refreshToken, profile, done) => {
-            // myEmitter.emit('changeState')
-        User.findOne({googleId: profile.id}).then((currentUser) => {
-            User.findOneAndUpdate({username: 'dev010_1'}, {
-                username: 'admin', 
-                googleId: profile.id, 
-                thumbnail: profile.photos[0].value, 
-                admin: 1
-            }, (err, admin) => {
-                if (err) {
-                    throw err;
-                }
+           
+            // to obtain more user info 'email' field 
+            const token = accessToken;
+            const url = `https://openidconnect.googleapis.com/v1/userinfo?access_token=${token}`;
+    
+            axios.get(url, {
+                     method: 'GET',
+                     withCredentials: true,
+                     credentials: 'include',
+                     headers: {
+                           ContentType: 'application/json',
+                           key: process.env.GOOGLE_PEOPLE_API_KEY
+                     }
             })
-            if (currentUser) {
-               // if user exists in db we call done and we move on the the serializeUser function
-              done(null, currentUser);
-               // if not, create new user in db
-            } else {
-                 new User({
-                    username: profile.displayName,
-                    googleId: profile.id,
+            .then((res) => {
+                 const userInfo = res;
+                 // console.log(userInfo.data)
+            User.findOne({googleId: profile.id}).then((currentUser) => {
+                User.findOneAndUpdate({username: 'dev010_1'}, {
+                    username: 'Admin', 
+                    googleId: profile.id, 
                     thumbnail: profile.photos[0].value,
-                 }).save().then((newUser)=> {
-                      // moves on the the serializeUser function
-                      done(null, newUser);
-                 })
-              }
-          }).catch((errors) => {
-                console.log(errors);
-           });
-       })
-    )
+                    email: userInfo.data.email,
+                    admin: 1
+                }, (err, admin) => {
+                    if (err) {
+                        throw err;
+                    }
+                })
+                if (currentUser) {
+                   // if user exists in db we call done and we move on the the serializeUser function
+                  done(null, currentUser);
+                   // if not, create new user in db
+                } else {
+                     new User({
+                        username: profile.displayName,
+                        googleId: profile.id,
+                        thumbnail: profile.photos[0].value,
+                        email: userInfo.data.email
+                     }).save().then((newUser)=> {
+                          // moves on the the serializeUser function
+                          done(null, newUser);
+                     })
+                  }
+              }).catch((errors) => {
+                    console.log(errors);
+               });
+          })
+          .catch((errors) => {
+              console.log(errors)
+          })  
+            
+   })
+)
 
 
 

@@ -5,6 +5,10 @@
 
 
 
+
+    // USERS ROUTES
+
+
     // securing profile view
     const authCheck = (req, res, next) => {
 
@@ -19,7 +23,6 @@
        }
     }
 
-    
     
     
     // profile page
@@ -38,7 +41,6 @@
 
 
 
-
     // get comment
     router.get('/comment/:id', authCheck, nocache, (req, res) => {
       // Content-Security-Policy Header
@@ -49,7 +51,6 @@
       }); 
       res.end();
     });
-
 
 
 
@@ -95,7 +96,6 @@
   });
     
     
-
 
     // set browser no-cache headers
     function nocache(req, res, next) {

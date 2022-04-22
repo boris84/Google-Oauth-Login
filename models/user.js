@@ -6,6 +6,7 @@
     username: String,
     googleId: String,
     thumbnail: String,
+    email: String,
     comment: String,
     admin: Number
         
