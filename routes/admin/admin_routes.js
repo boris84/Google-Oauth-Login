@@ -112,7 +112,7 @@
     router.post('/users/admin-edit-user/:id', 
     [
        body('username', 'This field must have a value.').not().isEmpty(),
-       body('username', 'Letters Only.').matches(/^[\.a-zA-Z,!? ]*$/).escape().trim()
+       body('username', 'Letters Only.').matches(/^[\.a-zA-Z ]*$/).escape().trim()
     ], authCheck, nocache, 
         
     (req, res, next) => {    

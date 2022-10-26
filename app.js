@@ -62,6 +62,8 @@
            console.log(`listening on port:${PORT}`);
            console.log('connected to mongodb');
        })
+    }).catch(err => {
+          console.log(err.message);
     })
 
 
