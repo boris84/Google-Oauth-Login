@@ -50,7 +50,6 @@
    // app.use(enforce.HTTPS({ trustProtoHeader: true }));
 
 
-
    const uri = process.env.MONGODB_URI;
    
    // connect to mongodb atlas
