@@ -23,7 +23,7 @@
     "express-validator": "^6.5.0",
     "helmet": "^4.6.0",
     "moment": "^2.29.2",
-    "mongoose": "^6.0.8",
+    "mongoose": "^6.11.3",
     "openssl": "^2.0.0",
     "passport": "^0.4.1",
     "passport-google-oauth20": "^2.0.0",
