@@ -28,7 +28,7 @@
 <!-- /.container -->
 <main role="main" class="container">
   <div class="row">
-     <div class="col-xl-4 col-lg-6 col-md-8 col-sm-10 mx-auto">
+     <div class="col-xl-10 col-lg-10 col-md-10 col-sm-10 mx-auto">
            
         <!-- main navigation -->
         <div class="main-nav profile">
@@ -57,7 +57,7 @@
                <% if (admin) { %>
                     <h2>Hi <%= user.username %>,</h2>
                <% } else { %>
-                   <h2>Welcome to your profile,</h2>
+                   <h2>Welcome, <%= user.username %></h2>
                <% } %>
             </header>
         </div>
@@ -66,11 +66,18 @@
         <!-- main content -->
         <div class="main-content profile">
             <img src="<%= user.thumbnail %>"alt="profile picture"/>
-            <p><span>USERNAME: </span><%= user.username %></p>
-            <p><span>EMAIL: </span><%= user.email %></p>
+            <p><span>Username: </span><%= user.username %></p>
+            <p><span>Email: </span><%= user.email %></p>
+            <button class="btn btn-primary mt-2">Edit profile</button>
+
+
+            <div class="main-body profile mt-3 text-center">
+                <p class="d-inline fs-5">hey</p> <h3 class="d-inline"><%= user.username %></h3>, <p class="d-inline fs-5">what's on your mind today ...</p>
+            </div>
         </div>
 
-      
+
+
        <br> <!-- main footer -->
             <div class="main-footer profile ">
                 <div>&copy; dev010_1 2021</div>

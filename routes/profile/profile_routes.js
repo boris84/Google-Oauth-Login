@@ -28,7 +28,7 @@
     // profile page
     router.get('/', authCheck, nocache, (req, res) => {
        const date = req.user.createdAt;
-
+        
        // Content-Security-Policy Header
        res.setHeader("Content-Security-Policy", CspHeader);
        res.status(200).render('profile', { 

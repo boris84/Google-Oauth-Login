@@ -3,7 +3,9 @@
 
 
 /* USERS */
-
+.container {
+  background: #ddd;
+}
 
 /* main-nav home, main-nav login & main-nav profile main-title.comment*/
 .main-nav.home,
@@ -74,12 +76,11 @@
 /* main-content profile, main-content comment*/
 .main-content.profile span {
     color: black;
+    font-weight: 700;
     font-family: 'Kanit', sans-serif;
 }
 
 .main-content.profile p {
-    font-family: 'consolas';
-    color: firebrick;
     padding: 3px 0px;
     margin: 0;
 }
@@ -154,7 +155,6 @@
 /* ADMIN */
 
 /* main-nav admin-users & main-nav admin-details & main-nav admin-edit-user*/
-.main-nav.admin {}
 
 .main-nav.admin nav ul {
   display: flex;
@@ -271,6 +271,4 @@
   font-weight: bold;
 }
 
-#admin {
-/* display: none;*/
-}
+
